@@ -1,9 +1,270 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="scroll-smooth">
 <head>
-  <title>James Wei</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>James Landry | Mission Control</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    :root {
+      --cyan: #00F5FF;
+      --amber: #FFB800;
+    }
+    body {
+      font-family: 'Space Mono', monospace;
+      background: #0A0A0F;
+      color: #e0e0e0;
+      overflow-x: hidden;
+    }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; }
+    
+    .grain {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('https://picsum.photos/id/866/1920/1080') repeat;
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .hero-bg {
+      background: radial-gradient(circle at 50% 30%, rgba(0, 245, 255, 0.15), transparent 70%);
+    }
+    
+    .terminal {
+      font-family: 'Space Mono', monospace;
+      white-space: pre;
+    }
+    
+    .glow-cyan { text-shadow: 0 0 20px #00F5FF; }
+    .glow-amber { text-shadow: 0 0 20px #FFB800; }
+  </style>
 </head>
-<body>
-  <h1>Welcome to my website!</h1>
+<body class="relative min-h-screen">
+
+  <!-- Grain Overlay -->
+  <div class="grain"></div>
+
+  <!-- LOADING SCREEN -->
+  <div id="loader" class="fixed inset-0 bg-[#0A0A0F] z-50 flex items-center justify-center transition-opacity duration-1000">
+    <div class="text-center">
+      <div class="text-cyan-400 text-xl mb-8 tracking-[4px] terminal">INITIALIZING JAMES.EXE...</div>
+      <div class="w-96 h-1 bg-zinc-900 mx-auto rounded-full overflow-hidden">
+        <div id="loadbar" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-amber-400 transition-all duration-300"></div>
+      </div>
+      <p class="text-xs mt-4 text-zinc-500">Loading impact metrics... Synching neural core...</p>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero" class="hero-bg min-h-screen flex items-center relative border-b border-cyan-900/30">
+    <div class="max-w-7xl mx-auto px-8 z-10">
+      <div class="max-w-3xl">
+        <div class="text-cyan-400 text-sm tracking-[6px] mb-4">SENIOR PROGRAM MANAGER</div>
+        <h1 id="typewriter" class="text-7xl md:text-8xl font-bold leading-none mb-6 glow-cyan">
+          James Landry
+        </h1>
+        <div class="text-3xl text-amber-400 mb-10" id="subtitle">Orchestrating velocity at Tesla</div>
+        
+        <div class="grid grid-cols-3 gap-8 text-sm">
+          <div>
+            <div class="text-cyan-400 text-4xl font-bold" id="stat1">4.2</div>
+            <div class="text-zinc-400">Billion USD AR Volume</div>
+          </div>
+          <div>
+            <div class="text-cyan-400 text-4xl font-bold" id="stat2">12</div>
+            <div class="text-zinc-400">Cross-functional Teams</div>
+          </div>
+          <div>
+            <div class="text-cyan-400 text-4xl font-bold" id="stat3">3</div>
+            <div class="text-zinc-400">Countries • 1 Platform</div>
+          </div>
+        </div>
+
+        <button onclick="document.getElementById('mission').scrollIntoView({behavior:'smooth'})"
+          class="mt-16 px-10 py-5 border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black transition-all duration-300 flex items-center gap-3 group">
+          <span>ENTER MISSION CONTROL</span>
+          <i class="fas fa-arrow-down group-hover:translate-y-1 transition"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Background Grid -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none"></div>
+  </section>
+
+  <!-- MISSION CONTROL DASHBOARD -->
+  <section id="mission" class="py-24 border-b border-cyan-900/30">
+    <div class="max-w-7xl mx-auto px-8">
+      <h2 class="text-5xl font-bold text-center mb-16 glow-cyan">MISSION CONTROL</h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Initiative Cards -->
+        <div onclick="expandCard(this)" class="group bg-zinc-950 border border-zinc-800 hover:border-cyan-400 p-8 rounded-2xl cursor-pointer transition-all">
+          <div class="flex justify-between items-start mb-6">
+            <div>
+              <div class="text-emerald-400 text-sm font-bold">LIVE • ON TRACK</div>
+              <h3 class="text-2xl mt-2">Tesla AR Platform Rollout</h3>
+            </div>
+            <div class="text-right">
+              <div class="text-amber-400 text-3xl font-bold">87%</div>
+              <div class="text-xs text-zinc-500">COMPLETE</div>
+            </div>
+          </div>
+          <div class="h-2 bg-zinc-800 rounded-full overflow-hidden mb-4">
+            <div class="h-full w-[87%] bg-gradient-to-r from-cyan-400 to-amber-400"></div>
+          </div>
+          <div class="flex gap-2 text-xs">
+            <span class="px-3 py-1 bg-zinc-900 rounded-full">EMEA • NA</span>
+            <span class="px-3 py-1 bg-zinc-900 rounded-full">Q2 2026</span>
+          </div>
+        </div>
+
+        <div onclick="expandCard(this)" class="group bg-zinc-950 border border-zinc-800 hover:border-cyan-400 p-8 rounded-2xl cursor-pointer transition-all">
+          <div class="flex justify-between items-start mb-6">
+            <div>
+              <div class="text-yellow-400 text-sm font-bold">IN FLIGHT</div>
+              <h3 class="text-2xl mt-2">Germany Market Onboarding</h3>
+            </div>
+            <div class="text-right">
+              <div class="text-amber-400 text-3xl font-bold">64%</div>
+              <div class="text-xs text-zinc-500">COMPLETE</div>
+            </div>
+          </div>
+          <div class="h-2 bg-zinc-800 rounded-full overflow-hidden mb-4">
+            <div class="h-full w-[64%] bg-gradient-to-r from-cyan-400 to-amber-400"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS RADAR -->
+  <section class="py-24 bg-black/40">
+    <div class="max-w-5xl mx-auto px-8">
+      <h2 class="text-5xl font-bold text-center mb-16">SKILLS RADAR</h2>
+      <div class="flex justify-center">
+        <svg id="radar" width="600" height="600" class="drop-shadow-2xl"></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT TIMELINE -->
+  <section class="py-24 border-b border-cyan-900/30">
+    <div class="max-w-7xl mx-auto px-8">
+      <h2 class="text-5xl font-bold text-center mb-16 glow-amber">IMPACT TIMELINE</h2>
+      <div class="flex overflow-x-auto pb-12 snap-x snap-mandatory gap-8 scrollbar-hide">
+        <div class="min-w-[380px] snap-center bg-zinc-950 border border-zinc-800 p-8 rounded-3xl">
+          <div class="text-cyan-400 text-6xl font-bold mb-2">2025</div>
+          <div class="text-2xl">Tesla • Sr. Program Manager</div>
+          <p class="mt-6 text-lg">"Led $1.8B AR platform delivery across 3 continents"</p>
+        </div>
+        <!-- Add more timeline cards as needed -->
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section class="py-24">
+    <div class="max-w-7xl mx-auto px-8">
+      <h2 class="text-5xl font-bold text-center mb-16">SYSTEMS MASTERED</h2>
+      <div class="flex flex-wrap justify-center gap-6">
+        ["Jira", "Confluence", "SQL", "Salesforce", "Python", "Tableau", "Figma", "Notion"].forEach(tool => {
+          const chip = document.createElement('div');
+          chip.className = 'px-8 py-4 border border-cyan-400/30 hover:border-cyan-400 rounded-2xl text-cyan-400 hover:scale-110 transition-all cursor-pointer';
+          chip.textContent = tool;
+          document.querySelector('section:last-of-type div:last-child').appendChild(chip);
+        });
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="py-24 border-t border-cyan-900/30 bg-black">
+    <div class="max-w-4xl mx-auto text-center px-8">
+      <h2 class="text-6xl font-bold mb-8">Ready to build the future?</h2>
+      <div class="flex justify-center gap-8 text-2xl">
+        <a href="#" class="hover:text-cyan-400 transition">LinkedIn</a>
+        <a href="#" class="hover:text-cyan-400 transition">james@landry.pm</a>
+      </div>
+      <button onclick="alert('Resume downloaded — you\'re in.')" 
+        class="mt-16 px-12 py-6 bg-gradient-to-r from-cyan-400 to-amber-400 text-black font-bold text-xl rounded-2xl hover:scale-105 transition">
+        DOWNLOAD RESUME
+      </button>
+    </div>
+  </section>
+
+  <script>
+    // Tailwind Script
+    tailwind.config = {
+      content: [],
+      theme: { extend: {} }
+    }
+
+    // Typewriter Effect
+    function typewriter() {
+      const text = "James Landry // Senior Program Manager";
+      let i = 0;
+      const el = document.getElementById('typewriter');
+      el.innerHTML = '';
+      const interval = setInterval(() => {
+        if (i < text.length) {
+          el.innerHTML += text[i] === ' ' ? '&nbsp;' : text[i];
+          i++;
+        } else clearInterval(interval);
+      }, 60);
+    }
+
+    // Fake loading
+    window.onload = () => {
+      let progress = 0;
+      const bar = document.getElementById('loadbar');
+      const loader = document.getElementById('loader');
+      
+      const interval = setInterval(() => {
+        progress += Math.random() * 18;
+        if (progress > 100) progress = 100;
+        bar.style.width = progress + '%';
+        
+        if (progress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.display = 'none', 800);
+            typewriter();
+          }, 400);
+        }
+      }, 80);
+    };
+
+    // Expand card function
+    function expandCard(el) {
+      el.classList.toggle('scale-105');
+      el.classList.toggle('border-amber-400');
+    }
+
+    // Simple Radar Chart (SVG)
+    function drawRadar() {
+      const svg = document.getElementById('radar');
+      svg.innerHTML = `
+        <circle cx="300" cy="300" r="220" fill="none" stroke="#ffffff10" stroke-width="2"/>
+        <circle cx="300" cy="300" r="160" fill="none" stroke="#ffffff10" stroke-width="2"/>
+        <circle cx="300" cy="300" r="100" fill="none" stroke="#ffffff10" stroke-width="2"/>
+        <polygon points="300,100 420,220 380,420 220,420 180,220" fill="none" stroke="#00F5FF" stroke-width="6" stroke-linejoin="round" opacity="0.7"/>
+        <circle cx="300" cy="100" r="12" fill="#00F5FF"/>
+        <circle cx="420" cy="220" r="12" fill="#00F5FF"/>
+        <circle cx="380" cy="420" r="12" fill="#00F5FF"/>
+      `;
+    }
+    setTimeout(drawRadar, 1200);
+
+    // Mouse reactive background (subtle)
+    document.addEventListener('mousemove', (e) => {
+      document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
+    });
+  </script>
 </body>
 </html>
