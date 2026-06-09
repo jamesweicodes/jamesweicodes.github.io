@@ -1,6 +1,7 @@
 import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/sections/Hero";
 import Experience from "@/components/sections/Experience";
+import ExecutionPlaybook from "@/components/sections/ExecutionPlaybook";
 import SelectedWork from "@/components/sections/SelectedWork";
 import Projects from "@/components/sections/Projects";
 import MediaGallery from "@/components/sections/MediaGallery";
@@ -19,6 +20,7 @@ export default function HomePage() {
       <main id="main">
         <Hero />
         <Experience />
+        <ExecutionPlaybook />
         <SelectedWork />
         <Projects />
         <MediaGallery />
