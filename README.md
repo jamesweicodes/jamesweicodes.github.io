@@ -70,7 +70,7 @@ Utility classes: `glass-panel`, `text-gradient-accent`, `section-padding`, `cont
 
 - [x] **Step 1** — Scaffold, design tokens, content model
 - [x] **Step 2** — Hero + Navigation + geometric background
-- [ ] **Step 3** — Experience timeline + AI project cards
+- [x] **Step 3** — Experience timeline + AI project cards
 - [ ] **Step 4** — Videography gallery + contact footer
 
 ## Deployment
