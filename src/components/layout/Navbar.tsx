@@ -3,17 +3,41 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, Moon, Sun, X } from "lucide-react";
+import { useTheme } from "@/components/providers/theme-provider";
+import { cn } from "@/lib/utils";
 import { navLinks, siteConfig } from "@/lib/site-data";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const { theme, toggle } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const ids = navLinks.map((l) => l.href.replace("#", ""));
+    const observers: IntersectionObserver[] = [];
+
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   useEffect(() => {
@@ -27,11 +51,12 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+      className={cn(
+        "fixed inset-x-0 top-[2px] z-50 transition-all duration-500",
         scrolled
-          ? "border-b border-border bg-background/80 backdrop-blur-xl"
+          ? "border-b border-border/80 bg-background/70 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
           : "border-b border-transparent bg-transparent"
-      }`}
+      )}
     >
       <nav
         className="container-main flex h-16 items-center justify-between px-6 md:h-[4.5rem] md:px-8"
@@ -44,25 +69,51 @@ export default function Navbar() {
           JRW<span className="text-accent">.</span>
         </Link>
 
-        <ul className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="text-sm font-medium text-foreground-muted transition-colors hover:text-accent"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+        <ul className="hidden items-center gap-1 md:flex">
+          {navLinks.map((link) => {
+            const id = link.href.replace("#", "");
+            const isActive = activeSection === id;
+            return (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className={cn(
+                    "relative rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+                    isActive
+                      ? "text-accent"
+                      : "text-foreground-muted hover:text-foreground"
+                  )}
+                >
+                  {link.label}
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute inset-0 -z-10 rounded-lg bg-accent/10 border border-accent/20"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </a>
+              </li>
+            );
+          })}
         </ul>
 
-        <a
-          href="#contact"
-          className="hidden rounded-lg border border-accent/30 bg-accent/10 px-4 py-2 text-sm font-medium text-accent transition-all hover:border-accent/50 hover:bg-accent/15 md:inline-flex"
-        >
-          Get in Touch
-        </a>
+        <div className="hidden items-center gap-2 md:flex">
+          <button
+            type="button"
+            onClick={toggle}
+            className="rounded-lg p-2 text-foreground-muted transition-colors hover:bg-background-muted hover:text-accent"
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+          <a
+            href="#contact"
+            className="ml-2 rounded-lg border border-accent/30 bg-accent/10 px-4 py-2 text-sm font-medium text-accent transition-all hover:border-accent/50 hover:bg-accent/15 hover:shadow-[0_0_20px_rgba(14,165,233,0.2)]"
+          >
+            Contact
+          </a>
+        </div>
 
         <button
           type="button"
@@ -80,42 +131,41 @@ export default function Navbar() {
         {mobileOpen && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-b border-border bg-background/95 backdrop-blur-xl md:hidden"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="border-b border-border bg-background/95 backdrop-blur-2xl md:hidden"
           >
             <ul className="container-main flex flex-col gap-1 px-6 py-4">
-              {navLinks.map((link, i) => (
-                <motion.li
-                  key={link.href}
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                >
+              {navLinks.map((link) => (
+                <li key={link.href}>
                   <a
                     href={link.href}
                     onClick={handleNavClick}
-                    className="block rounded-lg px-3 py-3 text-base font-medium text-foreground-muted transition-colors hover:bg-background-muted hover:text-accent"
+                    className="block rounded-lg px-3 py-3 text-base font-medium text-foreground-muted hover:bg-background-muted hover:text-accent"
                   >
                     {link.label}
                   </a>
-                </motion.li>
+                </li>
               ))}
-              <motion.li
-                initial={{ opacity: 0, x: -12 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: navLinks.length * 0.05 }}
-              >
+              <li>
+                <button
+                  type="button"
+                  onClick={() => { toggle(); handleNavClick(); }}
+                  className="w-full rounded-lg px-3 py-3 text-left text-base text-foreground-muted hover:bg-background-muted"
+                >
+                  {theme === "dark" ? "Light mode" : "Dark mode"}
+                </button>
+              </li>
+              <li>
                 <a
                   href="#contact"
                   onClick={handleNavClick}
-                  className="mt-2 block rounded-lg border border-accent/30 bg-accent/10 px-3 py-3 text-center text-base font-medium text-accent"
+                  className="mt-2 block rounded-lg border border-accent/30 bg-accent/10 px-3 py-3 text-center font-medium text-accent"
                 >
-                  Get in Touch
+                  Contact
                 </a>
-              </motion.li>
+              </li>
             </ul>
           </motion.div>
         )}

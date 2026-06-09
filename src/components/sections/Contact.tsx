@@ -85,7 +85,7 @@ export default function Contact() {
         </div>
 
         <p className="mt-6 text-center text-xs text-foreground-subtle/60">
-          © {new Date().getFullYear()} James Wei ·{" "}
+          © {new Date().getFullYear()} James Wei · Built with ruthless execution ·{" "}
           <Link href="/" className="hover:text-accent">
             jameswei.me
           </Link>

@@ -1,108 +1,100 @@
-# jameswei.me — Portfolio (Next.js)
+# jameswei.me — Cinematic Portfolio v2.0
 
 Personal portfolio for **James Robert Wei** — Program Manager, AI Builder, Cinematographer.
 
-**Theme:** *The Era of Implementation*
+**Theme:** *The Era of Implementation* — cinematic execution at enterprise scale.
 
-Deployed at [jameswei.me](https://jameswei.me) via GitHub Pages.
+Live at [jameswei.me](https://jameswei.me)
 
 ## Tech Stack
 
-| Layer | Choice |
-|-------|--------|
-| Framework | Next.js 15 (App Router) |
-| UI | React 19, Tailwind CSS v4 |
-| Animation | Framer Motion |
+| Layer | Technology |
+|-------|------------|
+| Framework | Next.js 15 (App Router, static export) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 + custom cinematic design system |
+| UI | shadcn-style primitives (Button, Badge, Card) |
+| Animation | Framer Motion + Lenis smooth scroll |
+| Forms | React Hook Form + Zod (Lab tools) |
 | Icons | Lucide React |
-| Fonts | Inter, Instrument Serif, Space Grotesk |
-| Deploy | Static export → GitHub Pages |
+| AI | Nexus Context AI (client + optional FastAPI/Gemini backend) |
+| Deploy | GitHub Pages (CI) · Vercel-ready |
 
 ## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── globals.css      # Design tokens & Tailwind theme
-│   ├── layout.tsx       # Root layout, fonts, metadata
-│   └── page.tsx         # Home page (scaffold preview)
+│   ├── globals.css           # Cinematic tokens, film grain, light mode
+│   ├── layout.tsx            # Providers, SEO, JSON-LD
+│   ├── page.tsx              # Single-page portfolio
+│   └── lab/script-generator/ # Premium AI copy tool
 ├── components/
-│   ├── layout/          # Navbar (Step 2)
-│   ├── sections/        # Hero, Experience, Projects, Media, Contact
-│   ├── nexus/           # Nexus Context AI copilot UI
-│   └── ui/              # GeometricBackground, shared UI
-└── lib/
-    ├── site-data.ts     # Content model (single source of truth)
-    ├── nexus-engine.ts  # Portfolio-aware AI responses
-    └── nexus-guardrails.ts
-backend/                 # FastAPI + Gemini (optional live LLM deploy)
-├── main.py
-└── requirements.txt
-nexus_prompt.txt         # Gemini system prompt
-middleware.py            # Python guardrails
-config.json              # Model config
-public/
-└── CNAME                # Custom domain
-legacy/                  # Previous static site (reference + lab demo)
+│   ├── cinematic/            # Typewriter, orbit icons, counters, scroll progress
+│   ├── layout/               # Glassmorphic navbar + active section
+│   ├── nexus/                # Nexus Context AI copilot
+│   ├── sections/             # Hero, Experience, Projects, Media, Contact
+│   └── ui/                   # shadcn-style primitives
+├── lib/
+│   ├── site-data.ts          # Content model
+│   ├── nexus-engine.ts       # Portfolio AI responses
+│   ├── animations.ts         # Framer Motion variants
+│   └── utils.ts              # cn() helper
+backend/                      # FastAPI + Gemini (optional)
+public/CNAME                  # jameswei.me
+legacy/                       # Previous static site archive
 ```
+
+## Features
+
+- **Cinematic Hero** — Video background, film grain, typewriter subtitle, orbiting tech icons
+- **Sticky Nav** — Glassmorphism, active section highlight, theme toggle, mobile drawer
+- **Tesla Experience** — Animated metrics, filterable bento grid, expandable timeline
+- **Selected Work** — Filter by PM / AI / Film
+- **AI Lab** — Project cards + rebuilt script generator with form validation
+- **Media Gallery** — Masonry grid with lightbox
+- **Nexus Context AI** — Floating copilot with guardrails
+- **Polish** — Lenis scroll, scroll progress bar, reduced-motion support, SEO
 
 ## Getting Started
 
 ```bash
-# Clone the repo
 git clone https://github.com/jamesweicodes/jamesweicodes.github.io.git
 cd jamesweicodes.github.io
-
-# Install dependencies
 npm install
-
-# Run dev server (http://localhost:3000)
-npm run dev
-
-# Production build (outputs to /out for GitHub Pages)
-npm run build
-```
-
-## Design System
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--color-background` | `#050508` | Page background |
-| `--color-accent` | `#0ea5e9` | Primary CTA, links, glow |
-| `--color-tesla` | `#e31937` | Tesla / enterprise accents |
-| `--font-serif` | Instrument Serif | Hero headings |
-| `--font-sans` | Inter | Body copy |
-| `--font-display` | Space Grotesk | Labels, UI |
-
-Utility classes: `glass-panel`, `text-gradient-accent`, `section-padding`, `container-main`
-
-## Build Roadmap
-
-- [x] **Step 1** — Scaffold, design tokens, content model
-- [x] **Step 2** — Hero + Navigation + geometric background
-- [x] **Step 3** — Experience timeline + AI project cards
-- [x] **Step 4** — Videography masonry gallery + contact footer
-
-All steps complete. Deploy via GitHub Actions on push to `main`.
-
-## Nexus Context AI
-
-- **Floating copilot** (sparkle button, bottom-right) on the live site
-- **Guardrails** — injection + financial-advice filtering (TS + Python)
-- **Client engine** — structured Problem → Execution → Yield responses (works on GitHub Pages today)
-- **Live Gemini** (optional) — deploy `backend/` with `GEMINI_API_KEY`, set `NEXT_PUBLIC_NEXUS_API_URL` at build time
-
-```bash
-# Run FastAPI backend locally
-pip install -r backend/requirements.txt
-GEMINI_API_KEY=your_key uvicorn backend.main:app --reload --port 8000
+npm run dev          # http://localhost:3000
+npm run build        # outputs to /out
 ```
 
 ## Deployment
 
-Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the static export and deploys to GitHub Pages.
+### GitHub Pages (current)
+Push to `main` → `.github/workflows/deploy.yml` builds and deploys.
 
-> **Note:** Enable GitHub Pages → Source: **GitHub Actions** in repo Settings.
+Settings → Pages → Source: **GitHub Actions**
 
-## Legacy
+### Vercel (recommended for SSR/API later)
+```bash
+npx vercel
+```
+Remove `output: 'export'` from `next.config.ts` if using server features.
 
-The previous static HTML site lives in `/legacy` for reference. The real estate script generator demo is preserved at `/legacy/lab/script-generator/` and copied into the build output during CI.
+## Nexus AI Backend (optional)
+
+```bash
+pip install -r backend/requirements.txt
+GEMINI_API_KEY=your_key uvicorn backend.main:app --reload --port 8000
+```
+
+Set `NEXT_PUBLIC_NEXUS_API_URL` at build time for live Gemini responses.
+
+## Customization
+
+- **Content:** Edit `src/lib/site-data.ts`
+- **Hero video:** Replace CDN URL in `src/components/sections/Hero.tsx` or add `/public/videos/hero.mp4`
+- **Resume:** Add `public/resume.pdf` and update Hero CTA link
+- **Colors:** Design tokens in `src/app/globals.css` `@theme` block
+
+## Domain
+
+Keep **jameswei.me** — strong personal brand, already configured via `public/CNAME`.
