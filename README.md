@@ -28,9 +28,18 @@ src/
 ├── components/
 │   ├── layout/          # Navbar (Step 2)
 │   ├── sections/        # Hero, Experience, Projects, Media, Contact
+│   ├── nexus/           # Nexus Context AI copilot UI
 │   └── ui/              # GeometricBackground, shared UI
 └── lib/
-    └── site-data.ts     # Content model (single source of truth)
+    ├── site-data.ts     # Content model (single source of truth)
+    ├── nexus-engine.ts  # Portfolio-aware AI responses
+    └── nexus-guardrails.ts
+backend/                 # FastAPI + Gemini (optional live LLM deploy)
+├── main.py
+└── requirements.txt
+nexus_prompt.txt         # Gemini system prompt
+middleware.py            # Python guardrails
+config.json              # Model config
 public/
 └── CNAME                # Custom domain
 legacy/                  # Previous static site (reference + lab demo)
@@ -74,6 +83,19 @@ Utility classes: `glass-panel`, `text-gradient-accent`, `section-padding`, `cont
 - [x] **Step 4** — Videography masonry gallery + contact footer
 
 All steps complete. Deploy via GitHub Actions on push to `main`.
+
+## Nexus Context AI
+
+- **Floating copilot** (sparkle button, bottom-right) on the live site
+- **Guardrails** — injection + financial-advice filtering (TS + Python)
+- **Client engine** — structured Problem → Execution → Yield responses (works on GitHub Pages today)
+- **Live Gemini** (optional) — deploy `backend/` with `GEMINI_API_KEY`, set `NEXT_PUBLIC_NEXUS_API_URL` at build time
+
+```bash
+# Run FastAPI backend locally
+pip install -r backend/requirements.txt
+GEMINI_API_KEY=your_key uvicorn backend.main:app --reload --port 8000
+```
 
 ## Deployment
 

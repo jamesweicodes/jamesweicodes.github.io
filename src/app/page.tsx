@@ -4,6 +4,7 @@ import Experience from "@/components/sections/Experience";
 import Projects from "@/components/sections/Projects";
 import MediaGallery from "@/components/sections/MediaGallery";
 import Contact from "@/components/sections/Contact";
+import NexusCopilot from "@/components/nexus/NexusCopilot";
 
 export default function HomePage() {
   return (
@@ -21,6 +22,8 @@ export default function HomePage() {
         <MediaGallery />
         <Contact />
       </main>
+
+      <NexusCopilot />
     </>
   );
 }
