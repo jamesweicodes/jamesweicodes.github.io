@@ -1,0 +1,106 @@
+{
+  "hero": {
+    "location": "San Jose, CA",
+    "headline": "Turning Unstructured Problems into",
+    "headlineAccent": "Durable Systems.",
+    "subheadline": "Program Manager · AI Integrator · Full-Stack Builder",
+    "description": "Currently in my \"Era of Implementation\"—merging Fortune 50 enterprise scale with modern AI integration to drive ruthless execution and business growth.",
+    "primaryCta": { "label": "View the Blueprint", "href": "#experience" },
+    "secondaryCta": { "label": "Try the Lab", "href": "/lab/script-generator/" }
+  },
+  "experience": [
+    {
+      "title": "Program Manager – Financial Services Platforms",
+      "company": "Tesla, Inc.",
+      "dates": "2023 – Present",
+      "bullets": [
+        "Own delivery of platform, data, and automation programs across Software Engineering, Data Engineering, Analytics, and Operations.",
+        "Led development of a collections work management platform, replacing spreadsheets with systemized workflows, drastically improving execution speed at scale.",
+        "Partnered with data science to analyze behavioral data, driving strategies that measurably reduced Accounts Receivable (AR).",
+        "Built centralized operational reporting and delivered customer-facing payment features."
+      ]
+    },
+    {
+      "title": "Associate Program Manager",
+      "company": "Tesla, Inc.",
+      "dates": "2022 – 2023",
+      "bullets": [
+        "Managed cross-functional initiatives for leasing and collections with full milestone and dependency tracking.",
+        "Translated regulatory and analytical requirements into structured execution plans for engineering."
+      ]
+    },
+    {
+      "title": "Business Analyst",
+      "company": "Tesla, Inc.",
+      "dates": "2021 – 2022",
+      "bullets": [
+        "Supported foundational initiatives scaling leasing/collections from minimal structure into a data-driven organization.",
+        "Analyzed workflows to identify gaps and partnered with engineering to replace manual processes with automation."
+      ]
+    }
+  ],
+  "lab": [
+    {
+      "title": "B2B Event Space Platform",
+      "description": "Architected a commercial B2B application tailored for event spaces, successfully navigating residential zoning limits via strategic business model pivots.",
+      "icon": "building",
+      "href": null,
+      "status": "coming-soon"
+    },
+    {
+      "title": "Real Estate Automation Engine",
+      "description": "Built a web-based script generator and automation tool designed to create highly converting copy for real estate professionals.",
+      "icon": "terminal",
+      "href": "/lab/script-generator/",
+      "status": "live"
+    },
+    {
+      "title": "Market Insights Architecture",
+      "description": "Developed an automated AI news-scraping and script-generation pipeline for finance-focused YouTube and TikTok media channels.",
+      "icon": "zap",
+      "href": null,
+      "status": "coming-soon"
+    },
+    {
+      "title": "Wealth Engine Media",
+      "description": "Professional cinematography venture utilizing Sony a7 IV and DJI Osmo Pocket 3, showcasing high-end hands-on media production capabilities.",
+      "icon": "video",
+      "href": null,
+      "status": "coming-soon"
+    }
+  ],
+  "stack": [
+    { "label": "Program Execution", "highlight": false },
+    { "label": "Python", "highlight": false },
+    { "label": "AI Studio / Gemini API", "highlight": true },
+    { "label": "n8n Automation", "highlight": false },
+    { "label": "SQL & Dashboards", "highlight": false },
+    { "label": "Financial Platforms", "highlight": false },
+    { "label": "Vibe Coding", "highlight": true },
+    { "label": "Risk Management", "highlight": false }
+  ],
+  "contact": {
+    "name": "James Wei",
+    "education": "B.S. Computer Science & Engineering — UC Merced",
+    "certifications": "Google PM & LSU Project Management Certified",
+    "email": "James.wei.cs@gmail.com",
+    "phone": "(408) 802-2915",
+    "phoneHref": "tel:4088022915",
+    "linkedin": "https://www.linkedin.com/in/jamesweicodes/",
+    "linkedinLabel": "LinkedIn Profile →",
+    "offScreen": "Off-Screen: Value-targeted crypto strategy, dialing in home espresso, multi-day trekking (Yosemite/Lassen), & NFL."
+  },
+  "meta": {
+    "title": "James Wei | Program Manager & AI Integrator",
+    "description": "James Wei — Program Manager, AI Integrator, and Full-Stack Builder based in San Jose, CA. Turning unstructured problems into durable systems at enterprise scale.",
+    "url": "https://jameswei.me/",
+    "jobTitle": "Program Manager & AI Integrator"
+  },
+  "copilot": {
+    "suggestedPrompts": [
+      "What does James do at Tesla?",
+      "Show me a project",
+      "How do I reach James?"
+    ]
+  }
+}

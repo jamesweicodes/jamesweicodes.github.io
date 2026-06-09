@@ -4,16 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>James Wei | Program Manager & AI Integrator</title>
-    
-    <!-- Tailwind CSS -->
+    <meta name="description" content="James Wei — Program Manager, AI Integrator, and Full-Stack Builder based in San Jose, CA. Turning unstructured problems into durable systems at enterprise scale.">
+    <link rel="canonical" href="https://jameswei.me/">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23020617'/><text x='16' y='22' text-anchor='middle' fill='%2322d3ee' font-family='system-ui' font-weight='700' font-size='14'>JW</text></svg>">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jameswei.me/">
+    <meta property="og:title" content="James Wei | Program Manager & AI Integrator">
+    <meta property="og:description" content="Program Manager, AI Integrator, and Full-Stack Builder. Turning unstructured problems into durable systems.">
+    <meta property="og:site_name" content="James Wei">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="James Wei | Program Manager & AI Integrator">
+    <meta name="twitter:description" content="Program Manager, AI Integrator, and Full-Stack Builder. Turning unstructured problems into durable systems.">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "James Wei",
+        "jobTitle": "Program Manager & AI Integrator",
+        "url": "https://jameswei.me/",
+        "email": "James.wei.cs@gmail.com",
+        "sameAs": ["https://www.linkedin.com/in/jamesweicodes/"]
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <!-- Three.js for 3D WebGL -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/site.css">
+
     <script>
         tailwind.config = {
             theme: {
@@ -24,7 +46,7 @@
                     },
                     colors: {
                         brand: {
-                            400: '#22d3ee', // Cyan
+                            400: '#22d3ee',
                             500: '#06b6d4',
                         }
                     }
@@ -32,248 +54,72 @@
             }
         }
     </script>
-
-    <style>
-        body {
-            background-color: #020617; /* Slate 950 */
-            color: #f8fafc;
-            margin: 0;
-            overflow-x: hidden;
-            /* Subtle animated background gradient */
-            background-image: radial-gradient(circle at 15% 50%, rgba(6, 182, 212, 0.05), transparent 25%),
-                              radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.05), transparent 25%);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: rgba(34, 211, 238, 0.2); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(34, 211, 238, 0.5); }
-
-        /* Glassmorphism Cards */
-        .glass-card {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-card:hover {
-            border-color: rgba(34, 211, 238, 0.4);
-            box-shadow: 0 0 30px rgba(34, 211, 238, 0.1);
-            transform: translateY(-5px);
-        }
-
-        /* Neon Text Glow */
-        .text-glow {
-            text-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
-        }
-
-        /* Smooth Scroll Reveals */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Staggered delays for grids */
-        .delay-100 { transition-delay: 100ms; }
-        .delay-200 { transition-delay: 200ms; }
-    </style>
 </head>
 <body class="antialiased selection:bg-brand-500 selection:text-white pb-24">
 
-    <!-- 3D WebGL Background Container -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
     <div id="bg-canvas" class="fixed inset-0 z-0 pointer-events-none opacity-60"></div>
     <div class="fixed inset-0 z-0 pointer-events-none bg-gradient-to-b from-transparent to-[#020617]/90"></div>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-40 glass-card border-b-0 border-t-0 border-x-0 rounded-none">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="font-display font-bold text-xl tracking-tighter hover:text-brand-400 transition-colors">JW.</a>
-            <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-300">
-                <a href="#experience" class="hover:text-brand-400 transition-colors">Experience</a>
-                <a href="#lab" class="hover:text-brand-400 transition-colors">The Lab</a>
-                <a href="#contact" class="hover:text-brand-400 transition-colors">Contact</a>
+    <nav class="fixed w-full z-40 glass-card border-b-0 border-t-0 border-x-0 rounded-none no-hover" aria-label="Main navigation">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="/" class="font-display font-bold text-xl tracking-tighter hover:text-brand-400 transition-colors">JW.</a>
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-300">
+                    <a href="#experience" class="hover:text-brand-400 transition-colors">Experience</a>
+                    <a href="#lab" class="hover:text-brand-400 transition-colors">The Lab</a>
+                    <a href="#contact" class="hover:text-brand-400 transition-colors">Contact</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-brand-400 transition-colors p-2" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Toggle menu">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div id="mobile-nav-panel" class="mobile-nav-panel md:hidden">
+                <div class="flex flex-col gap-4 pt-4 pb-2 text-sm font-medium text-slate-300">
+                    <a href="#experience" class="hover:text-brand-400 transition-colors py-2">Experience</a>
+                    <a href="#lab" class="hover:text-brand-400 transition-colors py-2">The Lab</a>
+                    <a href="#contact" class="hover:text-brand-400 transition-colors py-2">Contact</a>
+                    <a href="/lab/script-generator/" class="hover:text-brand-400 transition-colors py-2 text-brand-400">Try the Lab Demo</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content wrapper to sit above 3D background -->
-    <div class="relative z-10 pointer-events-none">
-        
-        <!-- Hero Section -->
-        <section class="min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden pointer-events-auto">
-            <div class="max-w-4xl mx-auto text-center reveal">
-                <div class="inline-block mb-4 px-4 py-1 rounded-full glass-card text-brand-400 text-xs font-semibold tracking-widest uppercase border-brand-500/30 shadow-[0_0_15px_rgba(34,211,238,0.2)]">
-                    San Jose, CA
-                </div>
-                <h1 class="text-5xl md:text-7xl font-display font-bold mb-6 tracking-tight leading-tight">
-                    Turning Unstructured Problems into <br/><span class="text-brand-400 text-glow">Durable Systems.</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-slate-400 mb-8 max-w-2xl mx-auto font-light">
-                    Program Manager · AI Integrator · Full-Stack Builder
-                </p>
-                <p class="text-base text-slate-500 max-w-xl mx-auto mb-10">
-                    Currently in my "Era of Implementation"—merging Fortune 50 enterprise scale with modern AI integration to drive ruthless execution and business growth.
-                </p>
-                <a href="#experience" class="inline-flex items-center justify-center px-8 py-3 text-sm font-medium rounded-lg bg-brand-500 text-slate-950 hover:bg-brand-400 transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)]">
-                    View the Blueprint
-                </a>
-            </div>
+    <main id="main-content" class="relative z-10 pointer-events-none">
+        <section class="min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden pointer-events-auto" aria-label="Hero">
+            <div id="hero-section"></div>
         </section>
 
-        <!-- Experience Section -->
-        <section id="experience" class="py-24 px-6 border-t border-slate-800/50 bg-[#020617]/80 backdrop-blur-sm pointer-events-auto">
+        <section id="experience" class="py-24 px-6 border-t border-slate-800/50 bg-[#020617]/80 backdrop-blur-sm pointer-events-auto" aria-label="Experience">
             <div class="max-w-4xl mx-auto">
                 <h2 class="text-3xl font-display font-bold mb-12 text-glow reveal">Corporate Scale</h2>
-                
-                <div class="space-y-8">
-                    <div class="glass-card p-8 rounded-2xl reveal">
-                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                            <div>
-                                <h3 class="text-xl font-bold text-white">Program Manager – Financial Services Platforms</h3>
-                                <p class="text-brand-400 font-medium">Tesla, Inc.</p>
-                            </div>
-                            <span class="text-slate-500 text-sm mt-2 md:mt-0 font-mono">2023 – Present</span>
-                        </div>
-                        <ul class="space-y-3 text-slate-400 text-sm list-disc list-inside">
-                            <li>Own delivery of platform, data, and automation programs across Software Engineering, Data Engineering, Analytics, and Operations.</li>
-                            <li>Led development of a collections work management platform, replacing spreadsheets with systemized workflows, drastically improving execution speed at scale.</li>
-                            <li>Partnered with data science to analyze behavioral data, driving strategies that measurably reduced Accounts Receivable (AR).</li>
-                            <li>Built centralized operational reporting and delivered customer-facing payment features.</li>
-                        </ul>
-                    </div>
-
-                    <div class="glass-card p-8 rounded-2xl reveal delay-100">
-                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                            <div>
-                                <h3 class="text-xl font-bold text-white">Associate Program Manager</h3>
-                                <p class="text-brand-400 font-medium">Tesla, Inc.</p>
-                            </div>
-                            <span class="text-slate-500 text-sm mt-2 md:mt-0 font-mono">2022 – 2023</span>
-                        </div>
-                        <ul class="space-y-3 text-slate-400 text-sm list-disc list-inside">
-                            <li>Managed cross-functional initiatives for leasing and collections with full milestone and dependency tracking.</li>
-                            <li>Translated regulatory and analytical requirements into structured execution plans for engineering.</li>
-                        </ul>
-                    </div>
-
-                    <div class="glass-card p-8 rounded-2xl reveal delay-200">
-                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                            <div>
-                                <h3 class="text-xl font-bold text-white">Business Analyst</h3>
-                                <p class="text-brand-400 font-medium">Tesla, Inc.</p>
-                            </div>
-                            <span class="text-slate-500 text-sm mt-2 md:mt-0 font-mono">2021 – 2022</span>
-                        </div>
-                        <ul class="space-y-3 text-slate-400 text-sm list-disc list-inside">
-                            <li>Supported foundational initiatives scaling leasing/collections from minimal structure into a data-driven organization.</li>
-                            <li>Analyzed workflows to identify gaps and partnered with engineering to replace manual processes with automation.</li>
-                        </ul>
-                    </div>
-                </div>
+                <div id="experience-list" class="space-y-8"></div>
             </div>
         </section>
 
-        <!-- The Lab Section -->
-        <section id="lab" class="py-24 px-6 border-t border-slate-800/50 bg-[#0f172a]/40 pointer-events-auto">
+        <section id="lab" class="py-24 px-6 border-t border-slate-800/50 bg-[#0f172a]/40 pointer-events-auto" aria-label="The Lab">
             <div class="max-w-6xl mx-auto">
                 <h2 class="text-3xl font-display font-bold mb-12 text-glow reveal">The Lab / Ventures</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="glass-card p-8 rounded-2xl reveal flex flex-col justify-between">
-                        <div>
-                            <div class="h-10 w-10 rounded-full bg-brand-500/10 flex items-center justify-center mb-6">
-                                <svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                            </div>
-                            <h3 class="text-xl font-bold text-white mb-3">B2B Event Space Platform</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed">Architected a commercial B2B application tailored for event spaces, successfully navigating residential zoning limits via strategic business model pivots.</p>
-                        </div>
-                    </div>
-
-                    <div class="glass-card p-8 rounded-2xl reveal delay-100 flex flex-col justify-between">
-                        <div>
-                            <div class="h-10 w-10 rounded-full bg-brand-500/10 flex items-center justify-center mb-6">
-                                <svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                            </div>
-                            <h3 class="text-xl font-bold text-white mb-3">Real Estate Automation Engine</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed">Built a web-based script generator and automation tool designed to create highly converting copy for real estate professionals.</p>
-                        </div>
-                    </div>
-
-                    <div class="glass-card p-8 rounded-2xl reveal flex flex-col justify-between">
-                        <div>
-                            <div class="h-10 w-10 rounded-full bg-brand-500/10 flex items-center justify-center mb-6">
-                                <svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                            </div>
-                            <h3 class="text-xl font-bold text-white mb-3">Market Insights Architecture</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed">Developed an automated AI news-scraping and script-generation pipeline for finance-focused YouTube and TikTok media channels.</p>
-                        </div>
-                    </div>
-
-                    <div class="glass-card p-8 rounded-2xl reveal delay-100 flex flex-col justify-between">
-                        <div>
-                            <div class="h-10 w-10 rounded-full bg-brand-500/10 flex items-center justify-center mb-6">
-                                <svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                            </div>
-                            <h3 class="text-xl font-bold text-white mb-3">Wealth Engine Media</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed">Professional cinematography venture utilizing Sony a7 IV and DJI Osmo Pocket 3, showcasing high-end hands-on media production capabilities.</p>
-                        </div>
-                    </div>
-                </div>
+                <div id="lab-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
             </div>
         </section>
 
-        <!-- Stack Section -->
-        <section class="py-24 px-6 border-t border-slate-800/50 bg-[#020617]/80 backdrop-blur-sm pointer-events-auto">
+        <section class="py-24 px-6 border-t border-slate-800/50 bg-[#020617]/80 backdrop-blur-sm pointer-events-auto" aria-label="Core Stack">
             <div class="max-w-4xl mx-auto text-center">
                 <h2 class="text-3xl font-display font-bold mb-12 text-glow reveal">Core Stack</h2>
-                
-                <div class="flex flex-wrap justify-center gap-3 reveal">
-                    <span class="px-4 py-2 rounded-full glass-card text-sm text-slate-300 border-brand-500/30 hover:!translate-y-0">Program Execution</span>
-                    <span class="px-4 py-2 rounded-full glass-card text-sm text-slate-300 border-brand-500/30 hover:!translate-y-0">Python</span>
-                    <span class="px-4 py-2 rounded-full glass-card text-sm text-brand-400 border-brand-500/50 shadow-[0_0_10px_rgba(34,211,238,0.2)] hover:!translate-y-0">AI Studio / Gemini API</span>
-                    <span class="px-4 py-2 rounded-full glass-card text-sm text-slate-300 border-brand-500/30 hover:!translate-y-0">n8n Automation</span>
-                    <span class="px-4 py-2 rounded-full glass-card text-sm text-slate-300 border-brand-500/30 hover:!translate-y-0">SQL & Dashboards</span>
-                    <span class="px-4 py-2 rounded-full glass-card text-sm text-slate-300 border-brand-500/30 hover:!translate-y-0">Financial Platforms</span>
-                    <span class="px-4 py-2 rounded-full glass-card text-sm text-brand-400 border-brand-500/50 shadow-[0_0_10px_rgba(34,211,238,0.2)] hover:!translate-y-0">Vibe Coding</span>
-                    <span class="px-4 py-2 rounded-full glass-card text-sm text-slate-300 border-brand-500/30 hover:!translate-y-0">Risk Management</span>
-                </div>
+                <div id="stack-tags" class="flex flex-wrap justify-center gap-3 reveal"></div>
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer id="contact" class="py-12 px-6 border-t border-slate-800/50 bg-[#000000] pointer-events-auto">
-            <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
-                <div>
-                    <h3 class="text-xl font-display font-bold text-white mb-2">James Wei</h3>
-                    <p class="text-sm text-slate-500 mb-1">B.S. Computer Science & Engineering — UC Merced</p>
-                    <p class="text-sm text-slate-500">Google PM & LSU Project Management Certified</p>
-                </div>
-                
-                <div class="flex flex-col gap-2 text-sm">
-                    <a href="mailto:James.wei.cs@gmail.com" class="text-slate-400 hover:text-brand-400 transition-colors">James.wei.cs@gmail.com</a>
-                    <a href="tel:4088022915" class="text-slate-400 hover:text-brand-400 transition-colors">(408) 802-2915</a>
-                    <a href="https://www.linkedin.com/in/jamesweicodes/" target="_blank" class="text-slate-400 hover:text-brand-400 transition-colors">LinkedIn Profile →</a>
-                </div>
-            </div>
-            
-            <div class="max-w-4xl mx-auto mt-12 text-center pb-8 md:pb-0">
-                <p class="text-xs text-slate-700">Off-Screen: Value-targeted crypto strategy, dialing in home espresso, multi-day trekking (Yosemite/Lassen), & NFL.</p>
-            </div>
+        <footer id="contact" class="py-12 px-6 border-t border-slate-800/50 bg-[#000000] pointer-events-auto" aria-label="Contact">
+            <div id="contact-section"></div>
         </footer>
-    </div>
+    </main>
 
-    <!-- macOS Style Dock -->
     <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-auto">
-        <div class="dock-container flex items-end gap-3 rounded-2xl glass-card px-4 py-3 pb-2 shadow-2xl">
-            <a href="#" class="dock-item relative flex items-center justify-center w-12 h-12 rounded-xl bg-white/5 border border-white/10 shadow-lg hover:bg-white/10 transition-colors origin-bottom" title="Home">
+        <div class="dock-container flex items-end gap-3 rounded-2xl glass-card px-4 py-3 pb-2 shadow-2xl no-hover">
+            <a href="/" class="dock-item relative flex items-center justify-center w-12 h-12 rounded-xl bg-white/5 border border-white/10 shadow-lg hover:bg-white/10 transition-colors origin-bottom" title="Home">
                 <i data-lucide="home" class="text-slate-300 w-5 h-5 pointer-events-none"></i>
             </a>
             <a href="#experience" class="dock-item relative flex items-center justify-center w-12 h-12 rounded-xl bg-white/5 border border-white/10 shadow-lg hover:bg-white/10 transition-colors origin-bottom" title="Experience">
@@ -283,231 +129,36 @@
                 <i data-lucide="terminal" class="text-slate-300 w-5 h-5 pointer-events-none"></i>
             </a>
             <div class="w-px h-8 bg-white/10 mx-1 mb-2"></div>
-            <!-- AI Copilot Button -->
-            <button id="ai-btn" class="dock-item relative flex items-center justify-center w-12 h-12 rounded-xl bg-brand-500/20 border border-brand-500/40 shadow-[0_0_15px_rgba(34,211,238,0.2)] hover:bg-brand-500/30 transition-colors origin-bottom" title="AI Copilot">
+            <button id="ai-btn" class="dock-item relative flex items-center justify-center w-12 h-12 rounded-xl bg-brand-500/20 border border-brand-500/40 shadow-[0_0_15px_rgba(34,211,238,0.2)] hover:bg-brand-500/30 transition-colors origin-bottom" title="AI Copilot" aria-label="Open AI Copilot">
                 <i data-lucide="sparkles" class="text-brand-400 w-5 h-5 pointer-events-none"></i>
             </button>
         </div>
     </div>
 
-    <!-- AI Sidebar (Slide Out) -->
-    <div id="ai-sidebar" class="fixed top-4 right-4 bottom-4 w-[400px] max-w-[90vw] z-50 rounded-2xl bg-[#0f172a]/90 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_rgba(34,211,238,0.1)] flex flex-col overflow-hidden transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] translate-x-[120%] pointer-events-auto">
-        <!-- Sidebar Header -->
+    <div id="ai-sidebar" class="fixed top-4 right-4 bottom-4 w-[400px] max-w-[90vw] z-50 rounded-2xl bg-[#0f172a]/90 backdrop-blur-2xl border border-white/10 shadow-[0_0_50px_rgba(34,211,238,0.1)] flex flex-col overflow-hidden transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] translate-x-[120%] pointer-events-auto" role="dialog" aria-label="Nexus Context AI">
         <div class="flex items-center justify-between p-4 border-b border-white/10 bg-white/5">
             <div class="flex items-center gap-2">
                 <i data-lucide="sparkles" class="w-4 h-4 text-brand-400"></i>
                 <h3 class="font-display font-medium text-sm text-slate-100">Nexus Context AI</h3>
             </div>
-            <button id="close-ai" class="text-slate-400 hover:text-white transition-colors">
+            <button id="close-ai" class="text-slate-400 hover:text-white transition-colors" aria-label="Close AI Copilot">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
         </div>
-
-        <!-- Chat History -->
-        <div id="chat-history" class="flex-1 overflow-y-auto p-4 space-y-4">
-            <div class="text-center text-slate-500 text-sm mt-10 px-4">
-                This is a static frontend deployment. In production, this connects to Gemini via API to analyze James's portfolio architecture. Try sending a query below.
-            </div>
-        </div>
-
-        <!-- Chat Input Form -->
+        <div id="chat-history" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
         <form id="chat-form" class="p-4 border-t border-white/10 bg-black/40">
             <div class="relative">
-                <input id="chat-input" type="text" placeholder="Query system data..." class="w-full bg-white/5 border border-white/10 rounded-xl pl-4 pr-10 py-3 text-sm text-white focus:outline-none focus:border-brand-500/50 transition-colors placeholder:text-slate-500" autocomplete="off" />
-                <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-brand-500/20 text-brand-400 rounded-lg hover:bg-brand-500/30 transition-colors">
+                <input id="chat-input" type="text" placeholder="Ask about experience, projects, stack..." class="w-full bg-white/5 border border-white/10 rounded-xl pl-4 pr-10 py-3 text-sm text-white focus:outline-none focus:border-brand-500/50 transition-colors placeholder:text-slate-500" autocomplete="off" />
+                <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-brand-500/20 text-brand-400 rounded-lg hover:bg-brand-500/30 transition-colors" aria-label="Send message">
                     <i data-lucide="send" class="w-4 h-4"></i>
                 </button>
             </div>
         </form>
     </div>
 
-    <!-- Core Logic & Scripts -->
-    <script>
-        // 1. Initialize Icons
-        lucide.createIcons();
-
-        // 2. Smooth Scroll Reveal (Your Original Code)
-        document.addEventListener('DOMContentLoaded', () => {
-            const reveals = document.querySelectorAll('.reveal');
-            const revealOnScroll = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
-            reveals.forEach(reveal => {
-                revealOnScroll.observe(reveal);
-            });
-        });
-
-        // 3. THREE.JS LIQUID CYBER SPHERE BACKGROUND (Styled to Cyan/Slate)
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        document.getElementById('bg-canvas').appendChild(renderer.domElement);
-
-        // Outer Liquid Mesh
-        const geometry = new THREE.IcosahedronGeometry(2, 8); 
-        const material = new THREE.MeshBasicMaterial({ 
-            color: 0x22d3ee, // Brand Cyan
-            wireframe: true, 
-            transparent: true, 
-            opacity: 0.15 
-        });
-        const sphere = new THREE.Mesh(geometry, material);
-        scene.add(sphere);
-
-        // Inner Core Mesh
-        const innerGeo = new THREE.IcosahedronGeometry(1.4, 2);
-        const innerMat = new THREE.MeshPhongMaterial({ 
-            color: 0x020617, // Slate 950
-            emissive: 0x011322, 
-            specular: 0x22d3ee, 
-            shininess: 100, 
-            flatShading: true 
-        });
-        const innerSphere = new THREE.Mesh(innerGeo, innerMat);
-        scene.add(innerSphere);
-
-        // Lighting
-        const light = new THREE.DirectionalLight(0xffffff, 1);
-        light.position.set(5, 5, 5);
-        scene.add(light);
-
-        camera.position.z = 5;
-        // Shift camera to right side for desktop
-        camera.position.x = window.innerWidth > 768 ? -2.5 : 0;
-
-        // Store original vertices for liquid animation
-        const originalVertices = [];
-        const positionAttribute = geometry.getAttribute('position');
-        for (let i = 0; i < positionAttribute.count; i++) {
-            const vertex = new THREE.Vector3();
-            vertex.fromBufferAttribute(positionAttribute, i);
-            originalVertices.push(vertex);
-        }
-
-        let time = 0;
-        function animate() {
-            requestAnimationFrame(animate);
-            time += 0.01;
-            
-            // Deform vertices for liquid effect
-            const positions = geometry.getAttribute('position');
-            for (let i = 0; i < positions.count; i++) {
-                const p = originalVertices[i];
-                const wave1 = 0.15 * Math.sin(p.x * 2 + time);
-                const wave2 = 0.15 * Math.sin(p.y * 3 + time * 1.5);
-                const wave3 = 0.15 * Math.sin(p.z * 2 + time * 0.5);
-                positions.setXYZ(i, p.x + wave1, p.y + wave2, p.z + wave3);
-            }
-            positions.needsUpdate = true;
-
-            sphere.rotation.y += 0.001;
-            innerSphere.rotation.x -= 0.002;
-            innerSphere.rotation.y -= 0.002;
-            
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Mouse interaction for 3D sphere
-        let targetX = 0;
-        let targetY = 0;
-        document.addEventListener('mousemove', (e) => {
-            targetX = (e.clientX / window.innerWidth) * 2 - 1;
-            targetY = -(e.clientY / window.innerHeight) * 2 + 1;
-            sphere.rotation.x += targetY * 0.005;
-            sphere.rotation.y += targetX * 0.005;
-        });
-
-        // Handle Resize
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.position.x = window.innerWidth > 768 ? -2.5 : 0;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // 4. macOS SPRING DOCK LOGIC
-        const dockItems = document.querySelectorAll('.dock-item');
-        const dockContainer = document.querySelector('.dock-container');
-
-        dockContainer.addEventListener('mousemove', (e) => {
-            dockItems.forEach(item => {
-                const rect = item.getBoundingClientRect();
-                const x = rect.left + rect.width / 2;
-                const distance = Math.abs(e.clientX - x);
-                // Magnification math
-                const scale = 1 + Math.max(0, 1 - distance / 80) * 0.4;
-                item.style.transform = `scale(${scale}) translateY(-${(scale - 1) * 15}px)`;
-            });
-        });
-
-        dockContainer.addEventListener('mouseleave', () => {
-            dockItems.forEach(item => {
-                item.style.transform = `scale(1) translateY(0)`;
-            });
-        });
-
-        // 5. AI SIDEBAR SIMULATED LOGIC
-        const aiSidebar = document.getElementById('ai-sidebar');
-        const aiBtn = document.getElementById('ai-btn');
-        const closeAi = document.getElementById('close-ai');
-        const chatForm = document.getElementById('chat-form');
-        const chatInput = document.getElementById('chat-input');
-        const chatHistory = document.getElementById('chat-history');
-
-        aiBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            aiSidebar.classList.remove('translate-x-[120%]');
-        });
-        closeAi.addEventListener('click', () => {
-            aiSidebar.classList.add('translate-x-[120%]');
-        });
-
-        chatForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const query = chatInput.value.trim();
-            if(!query) return;
-            
-            // Add User Message
-            chatHistory.innerHTML += `
-                <div class="flex justify-end mb-4">
-                    <div class="max-w-[85%] rounded-2xl px-4 py-3 text-sm bg-brand-500/10 text-brand-400 border border-brand-500/30 shadow-[0_0_10px_rgba(34,211,238,0.1)]">
-                        ${query}
-                    </div>
-                </div>`;
-            chatInput.value = '';
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-
-            // Mock AI Response Streaming
-            setTimeout(() => {
-                const aiMsgId = 'ai-msg-' + Date.now();
-                chatHistory.innerHTML += `
-                    <div class="flex justify-start mb-4">
-                        <div id="${aiMsgId}" class="max-w-[85%] rounded-2xl px-4 py-3 text-sm bg-slate-800/50 text-slate-200 border border-white/5 leading-relaxed shadow-lg"></div>
-                    </div>`;
-                
-                const text = "As a static frontend deployment, I can't query the live Gemini database right now.\n\nHowever, James utilizes Gemini API alongside Google AI Studio to architect full-stack blueprints, scrape finance data for Market Insights, and generate complex B2B routing logic.";
-                
-                const aiDiv = document.getElementById(aiMsgId);
-                let i = 0;
-                
-                const interval = setInterval(() => {
-                    aiDiv.innerHTML += text.charAt(i) === '\n' ? '<br/>' : text.charAt(i);
-                    i++;
-                    chatHistory.scrollTop = chatHistory.scrollHeight;
-                    if(i >= text.length) clearInterval(interval);
-                }, 20);
-
-            }, 400);
-        });
-    </script>
+    <script>lucide.createIcons();</script>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/background.js"></script>
+    <script src="/assets/js/copilot.js"></script>
 </body>
 </html>
