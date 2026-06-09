@@ -1,6 +1,7 @@
 {
   "hero": {
     "location": "San Jose, CA",
+    "status": "Open to PM & AI integration roles",
     "headline": "Turning Unstructured Problems into",
     "headlineAccent": "Durable Systems.",
     "subheadline": "Program Manager · AI Integrator · Full-Stack Builder",
@@ -8,6 +9,12 @@
     "primaryCta": { "label": "View the Blueprint", "href": "#experience" },
     "secondaryCta": { "label": "Try the Lab", "href": "/lab/script-generator/" }
   },
+  "stats": [
+    { "value": "4+", "label": "Years at Tesla" },
+    { "value": "3", "label": "Role Progressions" },
+    { "value": "4", "label": "Active Ventures" },
+    { "value": "1", "label": "Live Lab Demo" }
+  ],
   "experience": [
     {
       "title": "Program Manager – Financial Services Platforms",
