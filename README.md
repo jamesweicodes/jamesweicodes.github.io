@@ -69,7 +69,7 @@ Utility classes: `glass-panel`, `text-gradient-accent`, `section-padding`, `cont
 ## Build Roadmap
 
 - [x] **Step 1** — Scaffold, design tokens, content model
-- [ ] **Step 2** — Hero + Navigation + geometric background
+- [x] **Step 2** — Hero + Navigation + geometric background
 - [ ] **Step 3** — Experience timeline + AI project cards
 - [ ] **Step 4** — Videography gallery + contact footer
 

@@ -23,6 +23,13 @@ export const heroContent = {
   cta: { label: "Explore My Work", href: "#projects" },
 } as const;
 
+export const navLinks = [
+  { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
+  { label: "Media", href: "#media" },
+  { label: "Contact", href: "#contact" },
+] as const;
+
 export const experienceContent = {
   company: "Tesla, Inc.",
   division: "Financial Services",

@@ -1,4 +1,5 @@
-import { siteConfig, heroContent } from "@/lib/site-data";
+import Navbar from "@/components/layout/Navbar";
+import Hero from "@/components/sections/Hero";
 
 export default function HomePage() {
   return (
@@ -7,40 +8,36 @@ export default function HomePage() {
         Skip to content
       </a>
 
-      <main id="main" className="relative min-h-screen">
-        {/* Step 1 scaffold preview — design system smoke test */}
-        <section className="section-padding flex min-h-screen flex-col items-center justify-center text-center">
-          <div className="container-main">
-            <p className="mb-4 font-display text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-              {siteConfig.theme}
-            </p>
-            <h1 className="font-serif text-5xl tracking-tight text-foreground md:text-7xl">
-              {heroContent.headline}
-            </h1>
-            <p className="mt-4 text-lg text-foreground-muted md:text-xl">
-              {heroContent.subheadline}
-            </p>
-            <p className="mx-auto mt-6 max-w-xl text-sm text-foreground-subtle">
-              Step 1 complete — project scaffold, design tokens, and content model
-              are ready. Awaiting approval to build Hero &amp; Navigation (Step 2).
-            </p>
+      <Navbar />
 
-            <div className="mt-12 flex flex-wrap justify-center gap-3">
-              {["#050508", "#0ea5e9", "#e31937", "#f8fafc"].map((color) => (
-                <div
-                  key={color}
-                  className="glass-panel flex h-16 w-16 items-center justify-center rounded-xl text-[10px] text-foreground-subtle"
-                  style={{ borderColor: color === "#050508" ? undefined : color }}
-                >
-                  <div
-                    className="h-8 w-8 rounded-lg"
-                    style={{ backgroundColor: color }}
-                  />
-                </div>
-              ))}
-            </div>
+      <main id="main">
+        <Hero />
+
+        {/* Placeholder anchors for nav + CTA — filled in Steps 3 & 4 */}
+        <section
+          id="experience"
+          className="section-padding border-t border-border scroll-mt-20"
+          aria-hidden="true"
+        />
+        <section
+          id="projects"
+          className="min-h-[40vh] border-t border-border scroll-mt-20"
+          aria-label="Projects"
+        >
+          <div className="container-main px-6 py-24 text-center md:px-8">
+            <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+              Step 3 — Coming Next
+            </p>
+            <h2 className="mt-3 font-serif text-3xl text-foreground md:text-4xl">
+              Engineering &amp; AI Projects
+            </h2>
+            <p className="mx-auto mt-4 max-w-lg text-foreground-subtle">
+              Interactive project cards with stack pills and live demo links — built in Step 3.
+            </p>
           </div>
         </section>
+        <section id="media" className="scroll-mt-20" aria-hidden="true" />
+        <section id="contact" className="scroll-mt-20" aria-hidden="true" />
       </main>
     </>
   );
