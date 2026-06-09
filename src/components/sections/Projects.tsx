@@ -9,6 +9,10 @@ const statusConfig = {
     label: "Live Demo",
     className: "border-accent/30 bg-accent-muted text-accent",
   },
+  playable: {
+    label: "Playable",
+    className: "border-emerald-500/20 bg-emerald-500/10 text-emerald-300",
+  },
   blueprint: {
     label: "Blueprint",
     className: "border-border bg-background-muted text-foreground-subtle",
@@ -83,7 +87,7 @@ export default function Projects() {
         >
           {projectsContent.map((project) => {
             const status = statusConfig[project.status];
-            const isFeatured = project.status === "live";
+            const isFeatured = project.id === "real-estate";
 
             return (
               <motion.article
@@ -144,7 +148,7 @@ export default function Projects() {
                         href={project.href}
                         className="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
                       >
-                        Live Demo
+                        {project.status === "playable" ? "Play Game" : "Live Demo"}
                         <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                       </a>
                     ) : (

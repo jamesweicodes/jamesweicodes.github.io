@@ -85,6 +85,16 @@ export const projectsContent = [
     github: null,
   },
   {
+    id: "blackjack",
+    title: "Blackjack Table",
+    description:
+      "Interactive browser blackjack with shuffled decks, soft ace scoring, dealer logic, and session stats.",
+    stack: ["Next.js", "React", "Game Logic"],
+    status: "playable" as const,
+    href: "/blackjack",
+    github: null,
+  },
+  {
     id: "market-insights",
     title: "Market Insights Pipeline",
     description:
