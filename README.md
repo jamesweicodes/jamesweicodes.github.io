@@ -1,55 +1,84 @@
-# jameswei.me
+# jameswei.me — Portfolio (Next.js)
 
-Personal portfolio site for James Wei — deployed via GitHub Pages at [jameswei.me](https://jameswei.me).
+Personal portfolio for **James Robert Wei** — Program Manager, AI Builder, Cinematographer.
+
+**Theme:** *The Era of Implementation*
+
+Deployed at [jameswei.me](https://jameswei.me) via GitHub Pages.
+
+## Tech Stack
+
+| Layer | Choice |
+|-------|--------|
+| Framework | Next.js 15 (App Router) |
+| UI | React 19, Tailwind CSS v4 |
+| Animation | Framer Motion |
+| Icons | Lucide React |
+| Fonts | Inter, Instrument Serif, Space Grotesk |
+| Deploy | Static export → GitHub Pages |
 
 ## Project Structure
 
 ```
-├── index.html                  # Portfolio homepage
-├── assets/
-│   ├── css/site.css            # Custom styles (glass cards, animations, a11y)
-│   ├── js/
-│   │   ├── main.js             # Content rendering, nav, dock, scroll reveals
-│   │   ├── background.js       # Three.js animated background
-│   │   └── copilot.js          # Portfolio-aware AI assistant
-│   └── data/portfolio.json     # Single source of truth for site content
-├── lab/
-│   └── script-generator/       # Real estate copy generator demo
-├── CNAME                       # Custom domain (jameswei.me)
-└── README.md
+src/
+├── app/
+│   ├── globals.css      # Design tokens & Tailwind theme
+│   ├── layout.tsx       # Root layout, fonts, metadata
+│   └── page.tsx         # Home page (scaffold preview)
+├── components/
+│   ├── layout/          # Navbar (Step 2)
+│   ├── sections/        # Hero, Experience, Projects, Media, Contact
+│   └── ui/              # GeometricBackground, shared UI
+└── lib/
+    └── site-data.ts     # Content model (single source of truth)
+public/
+└── CNAME                # Custom domain
+legacy/                  # Previous static site (reference + lab demo)
 ```
 
-## Local Preview
-
-From the repo root:
+## Getting Started
 
 ```bash
-python3 -m http.server 8080
+# Clone the repo
+git clone https://github.com/jamesweicodes/jamesweicodes.github.io.git
+cd jamesweicodes.github.io
+
+# Install dependencies
+npm install
+
+# Run dev server (http://localhost:3000)
+npm run dev
+
+# Production build (outputs to /out for GitHub Pages)
+npm run build
 ```
 
-Then open [http://localhost:8080](http://localhost:8080).
+## Design System
 
-## Features
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--color-background` | `#050508` | Page background |
+| `--color-accent` | `#0ea5e9` | Primary CTA, links, glow |
+| `--color-tesla` | `#e31937` | Tesla / enterprise accents |
+| `--font-serif` | Instrument Serif | Hero headings |
+| `--font-sans` | Inter | Body copy |
+| `--font-display` | Space Grotesk | Labels, UI |
 
-- **Dynamic content** — Experience, Lab ventures, stack, and contact info loaded from `portfolio.json`
-- **Nexus Context AI** — Portfolio-aware Q&A assistant (keyword routing, no backend required)
-- **Lab demo** — Real Estate Script Generator at `/lab/script-generator/`
-- **Mobile nav** — Hamburger menu for small screens
-- **Accessibility** — Skip link, focus states, reduced-motion support
-- **SEO** — Open Graph tags, JSON-LD Person schema, canonical URL
+Utility classes: `glass-panel`, `text-gradient-accent`, `section-padding`, `container-main`
+
+## Build Roadmap
+
+- [x] **Step 1** — Scaffold, design tokens, content model
+- [x] **Step 2** — Hero + Navigation + geometric background
+- [x] **Step 3** — Experience timeline + AI project cards
+- [ ] **Step 4** — Videography gallery + contact footer
 
 ## Deployment
 
-Push to `main` on GitHub. GitHub Pages serves the root directory with the custom domain from `CNAME`.
+Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the static export and deploys to GitHub Pages.
 
-No build step required — static HTML, CSS, and JS only.
+> **Note:** Enable GitHub Pages → Source: **GitHub Actions** in repo Settings.
 
-## Optional: Live Gemini API
+## Legacy
 
-The current AI copilot uses embedded portfolio data with keyword matching (works on GitHub Pages with no backend). To upgrade to live Gemini responses:
-
-1. Create a Cloudflare Worker (or similar serverless proxy) that holds your Gemini API key
-2. Point `copilot.js` at the proxy endpoint instead of local `matchIntent()`
-3. Never expose API keys in client-side code
-
-See [Google AI Studio](https://aistudio.google.com/) for Gemini API setup.
+The previous static HTML site lives in `/legacy` for reference. The real estate script generator demo is preserved at `/legacy/lab/script-generator/` and copied into the build output during CI.

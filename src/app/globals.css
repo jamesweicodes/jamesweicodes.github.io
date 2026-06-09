@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+/* ─── Design tokens: "Era of Implementation" ─── */
+@theme {
+  /* Core palette — deep black, crisp white, electric blue accent */
+  --color-background: #050508;
+  --color-background-elevated: #0a0a0f;
+  --color-background-muted: #111118;
+  --color-foreground: #f8fafc;
+  --color-foreground-muted: #94a3b8;
+  --color-foreground-subtle: #64748b;
+
+  --color-accent: #0ea5e9;
+  --color-accent-hover: #38bdf8;
+  --color-accent-muted: rgba(14, 165, 233, 0.12);
+  --color-accent-glow: rgba(14, 165, 233, 0.35);
+
+  /* Tesla / enterprise moment */
+  --color-tesla: #e31937;
+  --color-tesla-muted: rgba(227, 25, 55, 0.12);
+
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(14, 165, 233, 0.35);
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+
+  /* Spacing & radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
+
+  /* Animation */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Base ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-background);
+}
+
+/* Subtle grid texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 72px 72px;
+  pointer-events: none;
+}
+
+/* ─── Utility classes ─── */
+@utility glass-panel {
+  background: rgba(10, 10, 15, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.75rem;
+}
+
+.section-label::before {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-accent), transparent);
+}
+
+@utility text-tesla {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0.4rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--color-tesla), rgba(227, 25, 55, 0.1));
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -1.85rem;
+  top: 1.75rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-background);
+  border: 2px solid var(--color-tesla);
+  box-shadow: 0 0 12px rgba(227, 25, 55, 0.35);
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .timeline {
+    padding-left: 1.5rem;
+  }
+}
+
+@utility text-tesla {
+  color: var(--color-tesla);
+}
+
+@utility bg-tesla-muted {
+  background-color: var(--color-tesla-muted);
+}
+
+@utility text-gradient-accent {
+  background: linear-gradient(135deg, var(--color-accent-hover), var(--color-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility section-padding {
+  padding-inline: 1.5rem;
+  padding-block: 6rem;
+
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+    padding-block: 8rem;
+  }
+}
+
+@utility container-main {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+}
+
+/* ─── Focus & a11y ─── */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: var(--color-accent);
+  color: var(--color-background);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(14, 165, 233, 0.25);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(14, 165, 233, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
