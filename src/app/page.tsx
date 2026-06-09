@@ -2,6 +2,8 @@ import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/sections/Hero";
 import Experience from "@/components/sections/Experience";
 import Projects from "@/components/sections/Projects";
+import MediaGallery from "@/components/sections/MediaGallery";
+import Contact from "@/components/sections/Contact";
 
 export default function HomePage() {
   return (
@@ -16,10 +18,8 @@ export default function HomePage() {
         <Hero />
         <Experience />
         <Projects />
-
-        {/* Step 4 placeholders */}
-        <section id="media" className="scroll-mt-20" aria-hidden="true" />
-        <section id="contact" className="scroll-mt-20" aria-hidden="true" />
+        <MediaGallery />
+        <Contact />
       </main>
     </>
   );

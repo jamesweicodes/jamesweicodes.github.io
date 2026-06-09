@@ -28,10 +28,11 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      - name: Include legacy lab demo
+      - name: Include lab demo in export
         run: |
-          mkdir -p out/lab
-          cp -r legacy/lab/script-generator out/lab/ 2>/dev/null || true
+          mkdir -p out/lab/script-generator
+          cp -r public/lab/script-generator/* out/lab/script-generator/ 2>/dev/null || \
+          cp -r legacy/lab/script-generator/* out/lab/script-generator/ 2>/dev/null || true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

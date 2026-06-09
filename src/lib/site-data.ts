@@ -132,3 +132,10 @@ export const techStack = [
   "SQL & Dashboards",
   "Program Execution",
 ] as const;
+
+export const contactContent = {
+  education: "B.S. Computer Science & Engineering — UC Merced",
+  certifications: "Google PM & LSU Project Management Certified",
+  offScreen:
+    "Off-Screen: Value-targeted crypto strategy, dialing in home espresso, multi-day trekking (Yosemite/Lassen), & NFL.",
+} as const;
