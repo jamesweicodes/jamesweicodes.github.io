@@ -28,6 +28,7 @@ src/
 │   ├── globals.css           # Cinematic tokens, film grain, light mode
 │   ├── layout.tsx            # Providers, SEO, JSON-LD
 │   ├── page.tsx              # Single-page portfolio
+│   ├── venture-studio/       # New web app starter workspace
 │   └── lab/script-generator/ # Premium AI copy tool
 ├── components/
 │   ├── cinematic/            # Typewriter, orbit icons, counters, scroll progress
@@ -52,6 +53,7 @@ legacy/                       # Previous static site archive
 - **Tesla Experience** — Animated metrics, filterable bento grid, expandable timeline
 - **Selected Work** — Filter by PM / AI / Film
 - **AI Lab** — Project cards + rebuilt script generator with form validation
+- **Venture Studio** — New app workspace for product briefs, MVP scoping, and launch planning
 - **Media Gallery** — Masonry grid with lightbox
 - **Nexus Context AI** — Floating copilot with guardrails
 - **Polish** — Lenis scroll, scroll progress bar, reduced-motion support, SEO
