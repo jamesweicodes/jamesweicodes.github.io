@@ -75,6 +75,16 @@ export const projectsContent = [
     github: null,
   },
   {
+    id: "project-launch-planner",
+    title: "AI Project Launch Planner",
+    description:
+      "Client-side planning cockpit that turns a rough product idea into MVP scope, architecture, risks, next actions, and launch copy.",
+    stack: ["Next.js", "TypeScript", "AI Planning Logic", "Product Strategy"],
+    status: "live" as const,
+    href: "/lab/project-launch-planner/",
+    github: null,
+  },
+  {
     id: "event-space",
     title: "B2B Event Space Platform",
     description:
