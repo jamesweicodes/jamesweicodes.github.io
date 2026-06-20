@@ -65,6 +65,16 @@ export const experienceContent = {
 
 export const projectsContent = [
   {
+    id: "property-intelligence",
+    title: "AI Property Intelligence",
+    description:
+      "Full-stack real estate research app that turns an address into valuation, rent, risk, geography, and investor underwriting reports.",
+    stack: ["Next.js", "FastAPI", "Public Data APIs", "AI Underwriting"],
+    status: "live" as const,
+    href: "/property-intelligence/",
+    github: null,
+  },
+  {
     id: "event-space",
     title: "B2B Event Space Platform",
     description:

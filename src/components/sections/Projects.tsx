@@ -87,7 +87,7 @@ export default function Projects() {
         >
           {projectsContent.map((project) => {
             const status = statusConfig[project.status];
-            const isFeatured = project.id === "real-estate";
+            const isFeatured = project.id === "property-intelligence";
 
             return (
               <motion.article
@@ -177,13 +177,13 @@ export default function Projects() {
                         Try It Now
                       </p>
                       <p className="mt-2 font-serif text-2xl text-foreground">
-                        Generate listing copy in seconds
+                        Research any property in seconds
                       </p>
                       <a
                         href={project.href!}
                         className="mt-4 inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-background transition-colors hover:bg-accent-hover"
                       >
-                        Launch Generator
+                        Launch Intelligence
                         <ArrowUpRight className="h-4 w-4" />
                       </a>
                     </div>

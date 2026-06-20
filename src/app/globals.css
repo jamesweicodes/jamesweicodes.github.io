@@ -225,6 +225,31 @@ body::before {
   margin-inline: auto;
 }
 
+.input-shell {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-border);
+  background: rgba(17, 17, 24, 0.72);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--color-foreground);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.input-shell::placeholder {
+  color: var(--color-foreground-subtle);
+}
+
+.input-shell:focus {
+  border-color: rgba(14, 165, 233, 0.5);
+  background: rgba(17, 17, 24, 0.95);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
+  outline: none;
+}
+
 /* ─── Focus & a11y ─── */
 :focus-visible {
   outline: 2px solid var(--color-accent);

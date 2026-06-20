@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
+from backend.property_intelligence import PropertySearchRequest, build_property_report
 from middleware import handle_nexus_query
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -85,6 +86,11 @@ def nexus_query(body: QueryRequest):
         pass
 
     return QueryResponse(status="ok", message=raw)
+
+
+@app.post("/api/property/intelligence")
+def property_intelligence(body: PropertySearchRequest):
+    return build_property_report(body)
 
 
 if __name__ == "__main__":
