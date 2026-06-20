@@ -65,6 +65,16 @@ export const experienceContent = {
 
 export const projectsContent = [
   {
+    id: "venuespace",
+    title: "VenueSpace",
+    description:
+      "Hourly event-space marketplace MVP with intent-driven discovery, request-to-book validation, owner approvals, use-case reviews, and messaging.",
+    stack: ["Next.js", "Marketplace UX", "Booking Flow", "Stripe-Ready"],
+    status: "live" as const,
+    href: "/venuespace/",
+    github: null,
+  },
+  {
     id: "venture-studio",
     title: "Venture Studio",
     description:
