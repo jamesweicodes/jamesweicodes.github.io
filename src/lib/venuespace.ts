@@ -26,11 +26,20 @@ export type DailyOperatingHours = {
 
 export type OperatingHours = Record<DayKey, DailyOperatingHours>;
 
+export type VenueVibe =
+  | "Creative"
+  | "Professional"
+  | "Cozy"
+  | "Premium"
+  | "Nightlife"
+  | "Food-First";
+
 export type Venue = {
   id: string;
   name: string;
   neighborhood: string;
   category: "Cafe" | "Restaurant Backroom" | "Studio" | "Gallery";
+  vibe: VenueVibe;
   capacity: number;
   hourly_rate: number;
   min_hours: number;
@@ -43,8 +52,13 @@ export type Venue = {
     name: string;
     responseTime: string;
     stripeConnected: boolean;
+    verified: boolean;
   };
   amenities: string[];
+  policies: string[];
+  aiHighlights: string[];
+  bestFor: string;
+  offPeakNote: string;
   description: string;
 };
 
@@ -88,6 +102,36 @@ export type BookingRequestInput = {
   renterName: string;
 };
 
+export type IntentSearchInput = {
+  useCase: VenueUseCase;
+  guests: number;
+  budget: number;
+  vibe: VenueVibe | "Any";
+};
+
+export type VenueMatch = {
+  venue: Venue;
+  score: number;
+  reasons: string[];
+  caution: string | null;
+};
+
+export type HostOnboardingInput = {
+  businessName: string;
+  category: Venue["category"];
+  neighborhood: string;
+  capacity: number;
+  hourlyRate: number;
+  useCases: VenueUseCase[];
+};
+
+export type ReviewInsight = {
+  averageRating: number;
+  count: number;
+  topTags: VenueUseCase[];
+  summary: string;
+};
+
 export type BookingValidationResult =
   | { valid: true; hours: number }
   | { valid: false; message: string };
@@ -120,6 +164,7 @@ export const venues: Venue[] = [
     name: "Willow Glen Cafe Lounge",
     neighborhood: "Willow Glen, San Jose",
     category: "Cafe",
+    vibe: "Cozy",
     capacity: 32,
     hourly_rate: 95,
     min_hours: 2,
@@ -132,8 +177,17 @@ export const venues: Venue[] = [
       name: "Maya Chen",
       responseTime: "Usually replies in 45 minutes",
       stripeConnected: true,
+      verified: true,
     },
     amenities: ["Espresso bar", "Projector", "Street parking", "Flexible seating"],
+    policies: ["Outside dessert allowed", "No amplified music after 9 PM", "Setup time included"],
+    aiHighlights: [
+      "Strong value for workshops under 30 guests",
+      "Review language points to helpful staff and flexible table layouts",
+      "Best off-peak slot is weekday late afternoon",
+    ],
+    bestFor: "Small team workshops, founder meetups, and casual celebrations that need warmth over polish.",
+    offPeakNote: "Weekday evenings are underutilized and priced below studio alternatives.",
     description:
       "Warm cafe lounge with reliable Wi-Fi, after-hours availability, and a private rear seating area for small teams and creator events.",
   },
@@ -142,6 +196,7 @@ export const venues: Venue[] = [
     name: "SoFA Market Daylight Studio",
     neighborhood: "SoFA District, San Jose",
     category: "Studio",
+    vibe: "Creative",
     capacity: 18,
     hourly_rate: 140,
     min_hours: 3,
@@ -157,8 +212,17 @@ export const venues: Venue[] = [
       name: "Jordan Lee",
       responseTime: "Usually replies in 20 minutes",
       stripeConnected: true,
+      verified: true,
     },
     amenities: ["Natural light", "Backdrop wall", "Loading zone", "Bluetooth audio"],
+    policies: ["Certificate of insurance optional", "No glitter or confetti", "Load-in window available"],
+    aiHighlights: [
+      "Highest match for production use cases",
+      "Natural light and loading zone reduce shoot friction",
+      "Smaller capacity keeps the experience premium and controlled",
+    ],
+    bestFor: "Photo shoots, short-form content days, and premium creator sessions with a small crew.",
+    offPeakNote: "Sunday mornings create strong availability for creator content blocks.",
     description:
       "Compact production studio designed for photo shoots, founder content days, and small-format workshops near downtown transit.",
   },
@@ -167,6 +231,7 @@ export const venues: Venue[] = [
     name: "Santana Row Backroom",
     neighborhood: "West San Jose",
     category: "Restaurant Backroom",
+    vibe: "Food-First",
     capacity: 48,
     hourly_rate: 185,
     min_hours: 2,
@@ -187,8 +252,17 @@ export const venues: Venue[] = [
       name: "Elena Ramirez",
       responseTime: "Usually replies in 1 hour",
       stripeConnected: true,
+      verified: true,
     },
     amenities: ["Catering available", "Private bar", "AV screen", "Validated parking"],
+    policies: ["Food minimum may apply", "No outside alcohol", "Late-night security fee after 10 PM"],
+    aiHighlights: [
+      "Best fit when food and beverage are part of the event",
+      "Large capacity and parking improve guest logistics",
+      "Team offsite reviews mention AV strength",
+    ],
+    bestFor: "Team dinners, birthday parties, and pop-up dinners where hospitality matters as much as space.",
+    offPeakNote: "Early weekday dinner blocks monetize space before the prime dinner rush.",
     description:
       "Private restaurant backroom for off-peak gatherings, team dinners, and milestone celebrations with optional food and beverage packages.",
   },
@@ -369,4 +443,127 @@ export function validateBookingRequest(
 
 export function createMockPaymentIntentId(venueId: string) {
   return `pi_mock_${venueId}_${Date.now().toString(36)}`;
+}
+
+export function scoreVenueForIntent(venue: Venue, input: IntentSearchInput): VenueMatch {
+  const reasons: string[] = [];
+  let score = 40;
+
+  if (venue.allowed_use_cases.includes(input.useCase)) {
+    score += 24;
+    reasons.push(`Allows ${input.useCase.toLowerCase()} bookings`);
+  } else {
+    score -= 30;
+  }
+
+  if (venue.capacity >= input.guests) {
+    score += 14;
+    reasons.push(`Fits ${input.guests} guests within ${venue.capacity}-guest capacity`);
+  } else {
+    score -= 24;
+  }
+
+  if (venue.hourly_rate <= input.budget) {
+    score += 12;
+    reasons.push(`${formatCurrency(venue.hourly_rate)}/hr is inside the target budget`);
+  } else {
+    score -= Math.min(18, Math.ceil((venue.hourly_rate - input.budget) / 10));
+  }
+
+  if (input.vibe === "Any" || venue.vibe === input.vibe) {
+    score += 8;
+    reasons.push(input.vibe === "Any" ? `Vibe-flexible match` : `${venue.vibe} vibe match`);
+  }
+
+  if (venue.rating >= 4.8) {
+    score += 6;
+    reasons.push(`${venue.rating} average rating signals strong guest satisfaction`);
+  }
+
+  if (venue.host.verified && venue.host.stripeConnected) {
+    score += 6;
+    reasons.push("Verified host with Stripe Connect ready");
+  }
+
+  const caution =
+    venue.capacity < input.guests
+      ? `Capacity short by ${input.guests - venue.capacity} guests`
+      : venue.hourly_rate > input.budget
+        ? `${formatCurrency(venue.hourly_rate - input.budget)}/hr over target budget`
+        : null;
+
+  return {
+    venue,
+    score: Math.max(0, Math.min(100, score)),
+    reasons: reasons.slice(0, 4),
+    caution,
+  };
+}
+
+export function rankVenuesByIntent(sourceVenues: Venue[], input: IntentSearchInput) {
+  return sourceVenues
+    .map((venue) => scoreVenueForIntent(venue, input))
+    .sort((left, right) => right.score - left.score);
+}
+
+export function summarizeReviewInsights(venueId: string, useCase: VenueUseCase | "All"): ReviewInsight {
+  const venueReviews = reviews.filter(
+    (review) => review.venueId === venueId && (useCase === "All" || review.use_case_tag === useCase)
+  );
+
+  if (venueReviews.length === 0) {
+    return {
+      averageRating: 0,
+      count: 0,
+      topTags: [],
+      summary: "No review signal yet. Prioritize the first completed booking and post-event review.",
+    };
+  }
+
+  const averageRating =
+    Math.round((venueReviews.reduce((total, review) => total + review.rating, 0) / venueReviews.length) * 10) / 10;
+  const tagCounts = venueReviews.reduce<Record<VenueUseCase, number>>((counts, review) => {
+    counts[review.use_case_tag] = (counts[review.use_case_tag] ?? 0) + 1;
+    return counts;
+  }, {} as Record<VenueUseCase, number>);
+  const topTags = Object.entries(tagCounts)
+    .sort(([, left], [, right]) => right - left)
+    .map(([tag]) => tag as VenueUseCase)
+    .slice(0, 3);
+
+  return {
+    averageRating,
+    count: venueReviews.length,
+    topTags,
+    summary: `${venueReviews.length} tagged review${venueReviews.length === 1 ? "" : "s"} point to ${topTags.join(", ")} fit with ${averageRating}/5 satisfaction.`,
+  };
+}
+
+export function calculateMarketplaceHealth(sourceVenues: Venue[], sourceBookings: Booking[]) {
+  const pendingRequests = sourceBookings.filter((booking) => booking.status === "pending_approval").length;
+  const approvedRequests = sourceBookings.filter((booking) => booking.status === "approved").length;
+  const averageHourlyRate =
+    sourceVenues.reduce((total, venue) => total + venue.hourly_rate, 0) / Math.max(1, sourceVenues.length);
+  const verifiedHosts = sourceVenues.filter((venue) => venue.host.verified && venue.host.stripeConnected).length;
+
+  return {
+    supply: sourceVenues.length,
+    pendingRequests,
+    approvedRequests,
+    averageHourlyRate,
+    verifiedHosts,
+    useCaseCoverage: new Set(sourceVenues.flatMap((venue) => venue.allowed_use_cases)).size,
+  };
+}
+
+export function calculateHostReadiness(input: HostOnboardingInput) {
+  const checks = [
+    input.businessName.trim().length > 2,
+    input.neighborhood.trim().length > 2,
+    input.capacity >= 8,
+    input.hourlyRate >= 50,
+    input.useCases.length >= 2,
+  ];
+
+  return Math.round((checks.filter(Boolean).length / checks.length) * 100);
 }

@@ -5,16 +5,20 @@
 ## Scope covered
 
 - Intent-driven discovery by use case
+- AI-style event concierge with ranked venue matches and explainable scoring
 - Venue profile fields:
   - `hourly_rate`
   - `min_hours`
   - `allowed_use_cases`
   - `operating_hours`
+- AI venue intelligence, guest policies, trust signals, and off-peak strategy notes
 - Request-to-book widget with date, start time, end time, and use-case selection
 - Operating-hours and minimum-duration validation
 - Stripe-ready payment quote using subtotal plus platform fee
 - Owner dashboard approve/decline controls
 - Use-case-tagged reviews with review filters
+- Yelp-style review insight summaries by use case
+- Host onboarding/readiness scoring for supply growth
 - Simple booking message thread
 
 ## Current architecture
