@@ -209,6 +209,144 @@ body::before {
   color: transparent;
 }
 
+@utility text-gradient-venue {
+  background: linear-gradient(135deg, #f8fafc 0%, #fde68a 42%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.venuespace-shell {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 12% 4%, rgba(251, 191, 36, 0.16), transparent 30rem),
+    radial-gradient(circle at 88% 0%, rgba(14, 165, 233, 0.22), transparent 34rem),
+    radial-gradient(circle at 50% 52%, rgba(244, 114, 182, 0.08), transparent 42rem),
+    var(--color-background);
+}
+
+.venuespace-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 96px 96px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 80%);
+  pointer-events: none;
+}
+
+.venuespace-orb {
+  position: absolute;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.22), transparent 66%);
+  filter: blur(2px);
+  opacity: 0.7;
+  animation: venue-float 11s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.premium-surface {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(255, 255, 255, 0.1);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+    rgba(10, 10, 15, 0.72);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.premium-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.08) 35%, transparent 65%);
+  opacity: 0;
+  transform: translateX(-45%);
+  transition:
+    opacity 220ms ease,
+    transform 700ms var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.premium-surface:hover::after {
+  opacity: 1;
+  transform: translateX(45%);
+}
+
+.venue-filter-chip {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.venue-image-sheen {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(255, 255, 255, 0.22), transparent 20%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 38%, rgba(0, 0, 0, 0.18));
+  mix-blend-mode: screen;
+}
+
+.match-score-ring {
+  display: grid;
+  place-items: center;
+  width: 7.75rem;
+  height: 7.75rem;
+  border-radius: 9999px;
+  box-shadow:
+    0 0 42px rgba(14, 165, 233, 0.26),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.match-score-ring > span {
+  display: grid;
+  place-items: center;
+  width: 5.85rem;
+  height: 5.85rem;
+  border-radius: 9999px;
+  background: rgba(5, 5, 8, 0.92);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.skeleton-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  animation: venue-shimmer 1.7s infinite;
+}
+
+@keyframes venue-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes venue-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(1rem, -1.5rem, 0) scale(1.04);
+  }
+}
+
 @utility section-padding {
   padding-inline: 1.5rem;
   padding-block: 6rem;

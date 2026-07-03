@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import {
   ArrowLeft,
   BrainCircuit,
@@ -101,6 +102,39 @@ const starterHostOnboarding: HostOnboardingInput = {
   hourlyRate: 125,
   useCases: ["Workshop", "Photo Shoot"],
 };
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+  },
+};
+
+const stagger = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.09, delayChildren: 0.08 },
+  },
+};
+
+function IntelligenceSkeleton() {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-background/45 p-4" aria-label="Loading state preview">
+      <div className="mb-4 flex items-center justify-between gap-4">
+        <div className="h-3 w-28 rounded-full skeleton-shimmer" />
+        <div className="h-7 w-7 rounded-full skeleton-shimmer" />
+      </div>
+      <div className="space-y-2">
+        <div className="h-2.5 w-full rounded-full skeleton-shimmer" />
+        <div className="h-2.5 w-10/12 rounded-full skeleton-shimmer" />
+        <div className="h-2.5 w-7/12 rounded-full skeleton-shimmer" />
+      </div>
+    </div>
+  );
+}
 
 function getBookingDateLabel(booking: Booking) {
   return new Intl.DateTimeFormat("en-US", {
@@ -293,12 +327,14 @@ export default function VenueSpacePage() {
   }
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <section className="relative overflow-hidden border-b border-border">
+    <main className="venuespace-shell min-h-screen text-foreground">
+      <section className="relative overflow-hidden border-b border-white/10">
         <div
-          className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(14,165,233,0.28),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(227,25,55,0.18),transparent_28%)]"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(251,191,36,0.18),transparent_28%),radial-gradient(circle_at_80%_10%,rgba(14,165,233,0.24),transparent_30%),linear-gradient(180deg,rgba(255,255,255,0.04),transparent_55%)]"
           aria-hidden="true"
         />
+        <div className="venuespace-orb left-[-8rem] top-20" aria-hidden="true" />
+        <div className="venuespace-orb right-[-10rem] top-[-8rem] [animation-delay:1.8s]" aria-hidden="true" />
         <div className="container-main relative px-6 py-10 md:px-8 md:py-16">
           <Button asChild variant="ghost" size="sm" className="mb-10 w-fit">
             <Link href="/#projects">
@@ -307,14 +343,19 @@ export default function VenueSpacePage() {
             </Link>
           </Button>
 
-          <div className="grid gap-10 lg:grid-cols-[1fr_440px] lg:items-center">
-            <div>
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            animate="visible"
+            className="grid gap-10 lg:grid-cols-[1fr_440px] lg:items-center"
+          >
+            <motion.div variants={fadeUp}>
               <Badge variant="accent" className="mb-5">
-                VenueSpace MVP
+                VenueSpace V1 - Investor demo
               </Badge>
               <h1 className="max-w-4xl font-serif text-5xl leading-tight md:text-7xl">
                 Hourly event spaces,
-                <span className="block text-gradient-accent">matched by intent.</span>
+                <span className="block text-gradient-venue">matched by intent.</span>
               </h1>
               <p className="mt-6 max-w-2xl text-lg leading-8 text-foreground-muted">
                 Discover San Jose cafes, restaurant backrooms, and studios by what you are
@@ -337,9 +378,10 @@ export default function VenueSpacePage() {
                   <a href="#host-onboarding">List your space</a>
                 </Button>
               </div>
-            </div>
+            </motion.div>
 
-            <Card className="gradient-border">
+            <motion.div variants={fadeUp} whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 260, damping: 24 }}>
+            <Card className="gradient-border premium-surface">
               <CardHeader>
                 <CardTitle className="font-serif text-3xl">Request-to-book V1</CardTitle>
               </CardHeader>
@@ -349,7 +391,7 @@ export default function VenueSpacePage() {
                   ["Approval workflow", "Hosts approve or decline before funds are captured."],
                   ["Stripe-ready quote", "Calculates hourly subtotal plus platform fee."],
                 ].map(([title, description]) => (
-                  <div key={title} className="flex gap-3 rounded-2xl border border-border bg-background-muted/50 p-4">
+                  <div key={title} className="flex gap-3 rounded-2xl border border-white/10 bg-background-muted/50 p-4">
                     <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
                     <div>
                       <p className="font-display text-sm font-semibold">{title}</p>
@@ -357,16 +399,24 @@ export default function VenueSpacePage() {
                     </div>
                   </div>
                 ))}
+                <IntelligenceSkeleton />
               </CardContent>
             </Card>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      <section id="ai-concierge" className="border-b border-border bg-background-elevated/40 py-20 scroll-mt-20">
+      <section id="ai-concierge" className="scroll-mt-20 border-b border-white/10 bg-background-elevated/45 py-20">
         <div className="container-main px-6 md:px-8">
-          <div className="mb-10 grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
-            <div>
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            className="mb-10 grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-end"
+          >
+            <motion.div variants={fadeUp}>
               <p className="section-label">AI Concierge</p>
               <h2 className="font-serif text-3xl md:text-5xl">
                 Match spaces by event intent, not just filters.
@@ -375,26 +425,28 @@ export default function VenueSpacePage() {
                 A deterministic AI-style matching layer scores every venue on use case, budget,
                 guest count, vibe, trust, and review signal.
               </p>
-            </div>
+            </motion.div>
             <div className="grid gap-3 sm:grid-cols-3">
               {[
                 ["Supply", marketplaceHealth.supply.toString(), "active venues"],
                 ["Use cases", marketplaceHealth.useCaseCoverage.toString(), "covered intents"],
                 ["Verified", marketplaceHealth.verifiedHosts.toString(), "payment-ready hosts"],
               ].map(([label, value, detail]) => (
-                <Card key={label} className="bg-background-muted/45">
+                <motion.div key={label} variants={fadeUp} whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 300, damping: 24 }}>
+                <Card className="premium-surface bg-background-muted/45">
                   <CardContent className="pt-6">
                     <p className="text-xs uppercase tracking-wider text-foreground-subtle">{label}</p>
                     <p className="mt-2 font-display text-3xl font-semibold text-foreground">{value}</p>
                     <p className="mt-1 text-xs text-accent">{detail}</p>
                   </CardContent>
                 </Card>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
-            <Card className="gradient-border">
+            <Card className="gradient-border premium-surface">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <BrainCircuit className="h-5 w-5 text-accent" />
@@ -463,7 +515,7 @@ export default function VenueSpacePage() {
             </Card>
 
             <div className="grid gap-4 lg:grid-cols-[1fr_0.8fr]">
-              <Card className="overflow-hidden">
+              <Card className="premium-surface overflow-hidden">
                 <CardHeader>
                   <Badge variant="accent" className="w-fit">
                     Best match
@@ -474,14 +526,20 @@ export default function VenueSpacePage() {
                 </CardHeader>
                 {topMatch && (
                   <CardContent>
-                    <div className="mb-5 flex items-end justify-between gap-4">
-                      <div>
-                        <p className="font-display text-6xl font-semibold text-foreground">
-                          {topMatch.score}
-                        </p>
-                        <p className="text-xs uppercase tracking-wider text-foreground-subtle">
-                          AI match score
-                        </p>
+                    <div className="mb-6 flex items-center justify-between gap-5">
+                      <div
+                        className="match-score-ring"
+                        style={{
+                          background: `conic-gradient(rgba(14,165,233,0.95) ${topMatch.score * 3.6}deg, rgba(255,255,255,0.08) 0deg)`,
+                        }}
+                        aria-label={`${topMatch.score} out of 100 AI match score`}
+                      >
+                        <span>
+                          <strong className="font-display text-4xl text-foreground">{topMatch.score}</strong>
+                          <em className="mt-1 text-[10px] not-italic uppercase tracking-wider text-foreground-subtle">
+                            Match
+                          </em>
+                        </span>
                       </div>
                       <div className="text-right">
                         <p className="text-sm font-semibold text-accent">
@@ -509,17 +567,19 @@ export default function VenueSpacePage() {
                 )}
               </Card>
 
-              <Card>
+              <Card className="premium-surface">
                 <CardHeader>
                   <CardTitle>Ranked alternatives</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {aiMatches.slice(0, 3).map((match) => (
-                    <button
+                    <motion.button
                       key={match.venue.id}
                       type="button"
                       onClick={() => selectVenue(match.venue.id)}
-                      className="w-full rounded-2xl border border-border bg-background-muted/45 p-4 text-left transition-colors hover:border-accent/50"
+                      whileHover={{ x: 4 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full rounded-2xl border border-white/10 bg-background-muted/45 p-4 text-left transition-colors hover:border-accent/50"
                     >
                       <div className="flex items-center justify-between gap-3">
                         <div>
@@ -530,7 +590,7 @@ export default function VenueSpacePage() {
                           {match.score}
                         </span>
                       </div>
-                    </button>
+                    </motion.button>
                   ))}
                 </CardContent>
               </Card>
@@ -546,7 +606,7 @@ export default function VenueSpacePage() {
               <p className="section-label">Discovery</p>
               <h2 className="font-serif text-3xl md:text-5xl">San Jose spaces ready for off-peak use.</h2>
             </div>
-            <div className="rounded-2xl border border-border bg-background-muted/50 p-4">
+            <div className="premium-surface rounded-2xl border border-white/10 p-4">
               <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-foreground">
                 <Filter className="h-4 w-4 text-accent" />
                 Use-case filters
@@ -556,12 +616,13 @@ export default function VenueSpacePage() {
                   <button
                     key={useCase}
                     type="button"
+                    aria-pressed={useCaseFilter === useCase}
                     onClick={() => setUseCaseFilter(useCase)}
                     className={cn(
-                      "rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors",
+                      "venue-filter-chip rounded-full border px-3 py-1.5 text-xs font-semibold transition-all focus-visible:ring-2 focus-visible:ring-accent",
                       useCaseFilter === useCase
-                        ? "border-accent bg-accent text-background"
-                        : "border-border bg-background text-foreground-muted hover:border-accent/50 hover:text-accent"
+                        ? "border-accent bg-accent text-background shadow-[0_0_24px_rgba(14,165,233,0.22)]"
+                        : "border-white/10 bg-background/70 text-foreground-muted hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent"
                     )}
                   >
                     {useCase}
@@ -586,20 +647,34 @@ export default function VenueSpacePage() {
             </div>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-3">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            className="grid gap-4 lg:grid-cols-3"
+          >
             {filteredVenues.map((venue) => (
-              <button
+              <motion.button
                 key={venue.id}
                 type="button"
                 onClick={() => selectVenue(venue.id)}
+                variants={fadeUp}
+                whileHover={{ y: -8, scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
                 className={cn(
-                  "group overflow-hidden rounded-2xl border text-left transition-all hover:-translate-y-1",
+                  "premium-surface group overflow-hidden rounded-3xl border text-left transition-all",
                   selectedVenue.id === venue.id
-                    ? "border-accent bg-accent-muted"
-                    : "border-border bg-background-elevated/60 hover:border-accent/40"
+                    ? "border-accent bg-accent-muted shadow-[0_22px_80px_rgba(14,165,233,0.18)]"
+                    : "border-white/10 bg-background-elevated/60 hover:border-accent/40"
                 )}
               >
-                <div className={cn("h-36 bg-gradient-to-br", venue.imageTone)} />
+                <div className={cn("relative h-40 bg-gradient-to-br", venue.imageTone)}>
+                  <div className="venue-image-sheen" aria-hidden="true" />
+                  <div className="absolute bottom-4 left-4 rounded-full border border-white/15 bg-background/55 px-3 py-1 text-xs font-semibold text-foreground backdrop-blur-md">
+                    {venue.vibe}
+                  </div>
+                </div>
                 <div className="p-5">
                   <div className="mb-3 flex items-start justify-between gap-3">
                     <div>
@@ -609,7 +684,7 @@ export default function VenueSpacePage() {
                         {venue.neighborhood}
                       </p>
                     </div>
-                    <span className="rounded-full border border-border bg-background px-2 py-1 text-xs text-foreground-muted">
+                    <span className="rounded-full border border-white/10 bg-background/80 px-2 py-1 text-xs text-foreground-muted">
                       {venue.category}
                     </span>
                   </div>
@@ -624,24 +699,35 @@ export default function VenueSpacePage() {
                     {venue.allowed_use_cases.slice(0, 3).map((useCase) => (
                       <span
                         key={useCase}
-                        className="rounded-full bg-background-muted px-2.5 py-1 text-[11px] text-foreground-muted"
+                        className="rounded-full border border-white/10 bg-background-muted px-2.5 py-1 text-[11px] text-foreground-muted"
                       >
                         {useCase}
                       </span>
                     ))}
                   </div>
                 </div>
-              </button>
+              </motion.button>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      <section className="border-y border-border bg-background-elevated/35 py-20">
+      <section className="border-y border-white/10 bg-background-elevated/35 py-20">
         <div className="container-main grid gap-6 px-6 md:px-8 lg:grid-cols-[1fr_390px]">
           <div className="space-y-6">
-            <Card className="overflow-hidden">
-              <div className={cn("h-56 bg-gradient-to-br", selectedVenue.imageTone)} />
+            <Card className="premium-surface overflow-hidden rounded-3xl">
+              <div className={cn("relative h-64 bg-gradient-to-br", selectedVenue.imageTone)}>
+                <div className="venue-image-sheen" aria-hidden="true" />
+                <div className="absolute bottom-5 left-5 right-5 flex flex-wrap items-end justify-between gap-3">
+                  <div className="rounded-2xl border border-white/15 bg-background/50 px-4 py-3 backdrop-blur-md">
+                    <p className="text-xs uppercase tracking-wider text-foreground-subtle">Featured San Jose space</p>
+                    <p className="mt-1 font-display text-lg font-semibold text-foreground">{selectedVenue.vibe} venue</p>
+                  </div>
+                  <div className="rounded-full border border-white/15 bg-background/50 px-3 py-1 text-sm font-semibold text-accent backdrop-blur-md">
+                    {selectedVenue.rating} ★
+                  </div>
+                </div>
+              </div>
               <CardHeader>
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div>
@@ -666,7 +752,7 @@ export default function VenueSpacePage() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm leading-7 text-foreground-muted">{selectedVenue.description}</p>
-                <div className="mt-6 rounded-2xl border border-accent/20 bg-accent-muted/45 p-5">
+                <div className="premium-surface mt-6 rounded-2xl border border-accent/20 bg-accent-muted/45 p-5">
                   <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-accent">
                     <Lightbulb className="h-4 w-4" />
                     AI venue intelligence
@@ -682,19 +768,19 @@ export default function VenueSpacePage() {
                   </ul>
                 </div>
                 <div className="mt-6 grid gap-3 md:grid-cols-3">
-                  <div className="rounded-2xl border border-border bg-background-muted/50 p-4">
+                  <div className="premium-surface rounded-2xl border border-white/10 bg-background-muted/50 p-4">
                     <Users className="mb-3 h-5 w-5 text-accent" />
                     <p className="text-sm font-semibold">{selectedVenue.capacity} guests</p>
                     <p className="text-xs text-foreground-subtle">Comfortable max</p>
                   </div>
-                  <div className="rounded-2xl border border-border bg-background-muted/50 p-4">
+                  <div className="premium-surface rounded-2xl border border-white/10 bg-background-muted/50 p-4">
                     <Clock className="mb-3 h-5 w-5 text-accent" />
                     <p className="text-sm font-semibold">
                       {formatTimeLabel(operatingWindow.open)} - {formatTimeLabel(operatingWindow.close)}
                     </p>
                     <p className="text-xs text-foreground-subtle">{selectedDay} hours</p>
                   </div>
-                  <div className="rounded-2xl border border-border bg-background-muted/50 p-4">
+                  <div className="premium-surface rounded-2xl border border-white/10 bg-background-muted/50 p-4">
                     <CreditCard className="mb-3 h-5 w-5 text-accent" />
                     <p className="text-sm font-semibold">
                       {selectedVenue.host.stripeConnected ? "Stripe connected" : "Payment pending"}
@@ -704,7 +790,7 @@ export default function VenueSpacePage() {
                 </div>
 
                 <div className="mt-6 grid gap-3 md:grid-cols-2">
-                  <div className="rounded-2xl border border-border bg-background-muted/45 p-4">
+                  <div className="premium-surface rounded-2xl border border-white/10 bg-background-muted/45 p-4">
                     <p className="mb-3 font-display text-sm font-semibold">Guest policies</p>
                     <ul className="space-y-2">
                       {selectedVenue.policies.map((policy) => (
@@ -715,7 +801,7 @@ export default function VenueSpacePage() {
                       ))}
                     </ul>
                   </div>
-                  <div className="rounded-2xl border border-border bg-background-muted/45 p-4">
+                  <div className="premium-surface rounded-2xl border border-white/10 bg-background-muted/45 p-4">
                     <p className="mb-3 font-display text-sm font-semibold">Off-peak strategy</p>
                     <p className="text-sm leading-6 text-foreground-muted">{selectedVenue.offPeakNote}</p>
                     <p className="mt-3 text-xs text-accent">
@@ -752,7 +838,7 @@ export default function VenueSpacePage() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="premium-surface">
               <CardHeader>
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                   <div>
@@ -781,7 +867,7 @@ export default function VenueSpacePage() {
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid gap-3 rounded-2xl border border-border bg-background-muted/40 p-4 md:grid-cols-[160px_1fr]">
+                <div className="premium-surface grid gap-3 rounded-2xl border border-white/10 bg-background-muted/40 p-4 md:grid-cols-[160px_1fr]">
                   <div>
                     <p className="font-display text-4xl font-semibold text-foreground">
                       {reviewInsight.count > 0 ? reviewInsight.averageRating.toFixed(1) : "-"}
@@ -806,7 +892,7 @@ export default function VenueSpacePage() {
                 </div>
                 {visibleReviews.length > 0 ? (
                   visibleReviews.map((review) => (
-                    <article key={review.id} className="rounded-2xl border border-border bg-background-muted/40 p-4">
+                    <article key={review.id} className="premium-surface rounded-2xl border border-white/10 bg-background-muted/40 p-4">
                       <div className="flex flex-wrap items-center justify-between gap-3">
                         <div>
                           <p className="font-semibold text-foreground">{review.author}</p>
@@ -836,7 +922,7 @@ export default function VenueSpacePage() {
           </div>
 
           <div className="space-y-6">
-            <Card className="sticky top-6">
+            <Card className="premium-surface sticky top-6 rounded-3xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <CalendarClock className="h-5 w-5 text-accent" />
@@ -971,7 +1057,7 @@ export default function VenueSpacePage() {
           </div>
 
           <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
-            <Card>
+            <Card className="premium-surface">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Building2 className="h-5 w-5 text-accent" />
@@ -1056,7 +1142,7 @@ export default function VenueSpacePage() {
             </Card>
 
             <div className="space-y-6">
-              <Card className="gradient-border">
+              <Card className="gradient-border premium-surface">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Gauge className="h-5 w-5 text-accent" />
@@ -1083,7 +1169,7 @@ export default function VenueSpacePage() {
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="premium-surface">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <TrendingUp className="h-5 w-5 text-accent" />
@@ -1125,11 +1211,18 @@ export default function VenueSpacePage() {
           </div>
 
           <div className="grid gap-6 lg:grid-cols-[1fr_420px]">
-            <div className="space-y-4">
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
+              className="space-y-4"
+            >
               {bookings.map((booking) => {
                 const venue = venues.find((item) => item.id === booking.venueId) ?? venues[0];
                 return (
-                  <Card key={booking.id}>
+                  <motion.div key={booking.id} variants={fadeUp} whileHover={{ y: -3 }}>
+                  <Card className="premium-surface">
                     <CardContent className="flex flex-col gap-5 pt-6 md:flex-row md:items-center md:justify-between">
                       <div>
                         <div className="mb-2 flex flex-wrap items-center gap-2">
@@ -1167,11 +1260,12 @@ export default function VenueSpacePage() {
                       </div>
                     </CardContent>
                   </Card>
+                  </motion.div>
                 );
               })}
-            </div>
+            </motion.div>
 
-            <Card>
+            <Card className="premium-surface">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MessageSquare className="h-5 w-5 text-accent" />
@@ -1225,7 +1319,7 @@ export default function VenueSpacePage() {
 
       <section className="border-t border-border bg-background-elevated/40 py-14">
         <div className="container-main px-6 md:px-8">
-          <Card className="bg-accent-muted/35">
+          <Card className="premium-surface bg-accent-muted/35">
             <CardContent className="flex flex-col gap-5 pt-6 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="flex items-center gap-2 font-display text-lg font-semibold">
