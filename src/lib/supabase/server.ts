@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
-import type { Database } from "./database.types";
+import type { Database, Tables } from "./database.types";
 import { getRequiredEnv } from "@/lib/env";
 
 export async function createSupabaseServerClient() {
@@ -39,11 +39,12 @@ export async function requireSupabaseUser() {
     throw new Error("Unauthorized");
   }
 
-  const { data: profile, error: profileError } = await supabase
+  const { data, error: profileError } = await supabase
     .from("users")
     .select("*")
     .eq("id", user.id)
     .single();
+  const profile = data as Tables<"users"> | null;
 
   if (profileError || !profile) {
     throw new Error("User profile not found");

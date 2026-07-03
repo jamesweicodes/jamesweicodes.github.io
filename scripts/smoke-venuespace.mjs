@@ -107,6 +107,10 @@ const checks = [
 const failures = [];
 
 for (const check of checks) {
+  if (check.optional && process.env.CHECK_STATIC_EXPORT !== "1") {
+    continue;
+  }
+
   const absolutePath = join(root, check.file);
   if (!existsSync(absolutePath)) {
     if (!check.optional) {

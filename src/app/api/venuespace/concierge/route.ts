@@ -160,6 +160,9 @@ Soft constraints:
 
   try {
     const parsedResponse = JSON.parse(raw) as unknown;
+    if (!parsedResponse || typeof parsedResponse !== "object" || Array.isArray(parsedResponse)) {
+      return jsonError("Gemini returned invalid JSON shape", 502);
+    }
     return Response.json({ ...parsedResponse, source: "gemini" });
   } catch {
     return jsonError("Gemini returned invalid JSON", 502);
