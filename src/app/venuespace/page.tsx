@@ -1233,10 +1233,26 @@ export default function VenueSpacePage() {
                   MVP accuracy checkpoint
                 </p>
                 <p className="mt-2 max-w-3xl text-sm leading-6 text-foreground-muted">
-                  This static build covers Phase 1 profile fields, request-to-book validation, owner
-                  approvals, use-case reviews, discovery filters, and messaging UI. Real Supabase
-                  persistence and Stripe Connect capture need runtime credentials before production use.
+                  This build now pairs the interactive marketplace preview with production API routes
+                  for Supabase Auth/Postgres, Stripe Connect manual capture, Gemini Concierge scoring,
+                  realtime-ready messages, use-case reviews, and host readiness checks.
                 </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {[
+                    "Supabase RLS",
+                    "Stripe Connect",
+                    "Gemini Concierge",
+                    "Realtime messages",
+                    "Use-case reviews",
+                  ].map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-accent/20 bg-background px-2.5 py-1 text-xs text-accent"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
               </div>
               <Button asChild variant="magnetic">
                 <a href="#discover">

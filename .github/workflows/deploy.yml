@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      has_static_export: ${{ steps.detect_static_export.outputs.has_static_export }}
     steps:
       - uses: actions/checkout@v4
 
@@ -28,19 +30,31 @@ jobs:
       - run: npm ci
       - run: npm run build
 
+      - name: Detect static export
+        id: detect_static_export
+        run: |
+          if [ -d out ]; then
+            echo "has_static_export=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_static_export=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Include lab demo in export
+        if: steps.detect_static_export.outputs.has_static_export == 'true'
         run: |
           mkdir -p out/lab/script-generator
           cp -r public/lab/script-generator/* out/lab/script-generator/ 2>/dev/null || \
           cp -r legacy/lab/script-generator/* out/lab/script-generator/ 2>/dev/null || true
 
       - name: Upload artifact
+        if: steps.detect_static_export.outputs.has_static_export == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: out
 
   deploy:
     needs: build
+    if: needs.build.outputs.has_static_export == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
