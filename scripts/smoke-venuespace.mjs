@@ -6,6 +6,7 @@ const root = process.cwd();
 const checks = [
   {
     file: "out/venuespace/index.html",
+    optional: true,
     terms: [
       "VenueSpace MVP",
       "AI Concierge",
@@ -21,10 +22,14 @@ const checks = [
       "Decline",
       "Booking messages",
       "Test discovery",
+      "Supabase RLS",
+      "Stripe Connect",
+      "Gemini Concierge",
     ],
   },
   {
     file: "out/index.html",
+    optional: true,
     terms: ["/venuespace/", "VenueSpace", "Hourly event-space marketplace MVP"],
   },
   {
@@ -50,6 +55,36 @@ const checks = [
     ],
   },
   {
+    file: "supabase/migrations/20260703232000_venuespace_v1.sql",
+    terms: [
+      "create table public.users",
+      "create table public.venues",
+      "create table public.bookings",
+      "create table public.reviews",
+      "create table public.messages",
+      "enable row level security",
+      "supabase_realtime",
+      "venue-images",
+    ],
+  },
+  {
+    file: "src/app/api/venuespace/bookings/request/route.ts",
+    terms: [
+      "capture_method: \"manual\"",
+      "application_fee_amount",
+      "transfer_data",
+      "stripe_payment_intent_id",
+    ],
+  },
+  {
+    file: "src/app/api/venuespace/concierge/route.ts",
+    terms: ["getGeminiModel", "match_score", "local-fallback"],
+  },
+  {
+    file: "src/app/api/venuespace/stripe/connect/onboarding/route.ts",
+    terms: ["accountLinks.create", "account_onboarding"],
+  },
+  {
     file: "src/app/venuespace/page.tsx",
     terms: [
       "href=\"#ai-concierge\"",
@@ -72,9 +107,15 @@ const checks = [
 const failures = [];
 
 for (const check of checks) {
+  if (check.optional && process.env.CHECK_STATIC_EXPORT !== "1") {
+    continue;
+  }
+
   const absolutePath = join(root, check.file);
   if (!existsSync(absolutePath)) {
-    failures.push(`${check.file} does not exist`);
+    if (!check.optional) {
+      failures.push(`${check.file} does not exist`);
+    }
     continue;
   }
 

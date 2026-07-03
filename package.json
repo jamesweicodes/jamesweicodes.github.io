@@ -6,15 +6,19 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:static": "NEXT_OUTPUT_MODE=export next build",
     "start": "next start",
     "lint": "next lint",
     "test:smoke": "node scripts/smoke-venuespace.mjs"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@hookform/resolvers": "^5.4.0",
     "@radix-ui/react-dialog": "^1.1.16",
     "@radix-ui/react-slot": "^1.2.5",
     "@radix-ui/react-tabs": "^1.1.14",
+    "@supabase/ssr": "^0.12.0",
+    "@supabase/supabase-js": "^2.110.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.16.0",
@@ -25,6 +29,7 @@
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.78.0",
     "react-player": "^3.4.0",
+    "stripe": "^22.3.0",
     "tailwind-merge": "^3.6.0",
     "zod": "^4.4.3"
   },

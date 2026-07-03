@@ -18,7 +18,7 @@ Live at [jameswei.me](https://jameswei.me)
 | Forms | React Hook Form + Zod (Lab tools) |
 | Icons | Lucide React |
 | AI | Nexus Context AI (client + optional FastAPI/Gemini backend) |
-| Deploy | GitHub Pages (CI) · Vercel-ready |
+| Deploy | GitHub Pages for static portfolio · Vercel/Node runtime for VenueSpace APIs |
 
 ## Project Structure
 
@@ -43,6 +43,7 @@ src/
 │   ├── animations.ts         # Framer Motion variants
 │   └── utils.ts              # cn() helper
 backend/                      # FastAPI + Gemini (optional)
+supabase/                     # VenueSpace Postgres schema, RLS, realtime, storage
 public/CNAME                  # jameswei.me
 legacy/                       # Previous static site archive
 ```
@@ -55,6 +56,7 @@ legacy/                       # Previous static site archive
 - **Selected Work** — Filter by PM / AI / Film
 - **AI Lab** — Project cards + rebuilt script generator with form validation
 - **VenueSpace** — Intent-driven event-space discovery, request-to-book, owner approvals, and use-case reviews
+- **VenueSpace V1 APIs** — Supabase Auth/Postgres/RLS, Stripe Connect manual capture, Gemini Concierge, realtime messaging
 - **Venture Studio** — New app workspace for product briefs, MVP scoping, and launch planning
 - **Media Gallery** — Masonry grid with lightbox
 - **Nexus Context AI** — Floating copilot with guardrails
@@ -77,11 +79,11 @@ Push to `main` → `.github/workflows/deploy.yml` builds and deploys.
 
 Settings → Pages → Source: **GitHub Actions**
 
-### Vercel (recommended for SSR/API later)
+### Vercel / Node Runtime (required for VenueSpace V1 APIs)
 ```bash
 npx vercel
 ```
-Remove `output: 'export'` from `next.config.ts` if using server features.
+VenueSpace production APIs require Supabase, Stripe, and Gemini environment variables from `.env.example`.
 
 ## Nexus AI Backend (optional)
 
