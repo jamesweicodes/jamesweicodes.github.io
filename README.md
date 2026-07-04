@@ -74,6 +74,9 @@ npm run build        # outputs to /out
 
 ## Deployment
 
+### VenueSpace production
+VenueSpace API routes require a Node-capable Next.js runtime. Use Vercel with the variables in `.env.example` and follow `docs/venuespace-production-checklist.md`.
+
 ### GitHub Pages (current)
 Push to `main` → `.github/workflows/deploy.yml` builds and deploys.
 
