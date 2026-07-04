@@ -108,6 +108,23 @@ const checks = [
       "venuespace-favorites",
     ],
   },
+  {
+    file: "src/app/venuespace/layout.tsx",
+    terms: [
+      "VenueSpace | AI Event Space Marketplace for San Jose",
+      "application/ld+json",
+      "WebApplication",
+      "LocalBusiness",
+    ],
+  },
+  {
+    file: "vercel.json",
+    terms: ["framework", "nextjs", "Cache-Control", "/api/venuespace/(.*)"],
+  },
+  {
+    file: "docs/venuespace-production-checklist.md",
+    terms: ["Investor Demo Flow", "Supabase", "Stripe", "Gemini"],
+  },
 ];
 
 const failures = [];
