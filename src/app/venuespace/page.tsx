@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -14,6 +14,7 @@ import {
   CreditCard,
   Filter,
   Gauge,
+  Heart,
   Lightbulb,
   MapPin,
   MessageSquare,
@@ -103,6 +104,25 @@ const starterHostOnboarding: HostOnboardingInput = {
   useCases: ["Workshop", "Photo Shoot"],
 };
 
+const availabilityDays = [
+  { label: "Wed", date: "2026-06-24", note: "Best value" },
+  { label: "Thu", date: "2026-06-25", note: "Open evening" },
+  { label: "Fri", date: "2026-06-26", note: "High demand" },
+  { label: "Sat", date: "2026-06-27", note: "Party slots" },
+  { label: "Sun", date: "2026-06-28", note: "Creator block" },
+];
+
+const quickTimeSlots = [
+  { label: "Morning", start: "09:00", end: "12:00" },
+  { label: "Afternoon", start: "13:00", end: "16:00" },
+  { label: "Evening", start: "17:00", end: "20:00" },
+];
+
+type ToastState = {
+  tone: "success" | "error" | "info";
+  message: string;
+} | null;
+
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: {
@@ -175,6 +195,64 @@ export default function VenueSpacePage() {
   const [bookingNotice, setBookingNotice] = useState<string | null>(null);
   const [intentSearch, setIntentSearch] = useState<IntentSearchInput>(starterIntent);
   const [hostOnboarding, setHostOnboarding] = useState<HostOnboardingInput>(starterHostOnboarding);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [favoriteVenueIds, setFavoriteVenueIds] = useState<string[]>([]);
+  const [eventBrief, setEventBrief] = useState(
+    "We need a polished but warm space for a product strategy workshop with light AV, reliable Wi-Fi, and flexible seating."
+  );
+  const [toast, setToast] = useState<ToastState>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const useCase = params.get("useCase");
+    const rate = params.get("maxRate");
+    const query = params.get("q");
+    const venue = params.get("venue");
+
+    if (useCase && (useCase === "All" || venueUseCases.includes(useCase as VenueUseCase))) {
+      setUseCaseFilter(useCase as VenueUseCase | "All");
+    }
+    if (rate && Number.isFinite(Number(rate))) {
+      setMaxRate(Number(rate));
+    }
+    if (query) {
+      setSearchQuery(query);
+    }
+    if (venue && venues.some((item) => item.id === venue)) {
+      setSelectedVenueId(venue);
+    }
+
+    try {
+      const storedFavorites = localStorage.getItem("venuespace-favorites");
+      if (storedFavorites) {
+        setFavoriteVenueIds(JSON.parse(storedFavorites) as string[]);
+      }
+    } catch {
+      setFavoriteVenueIds([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (useCaseFilter !== "All") params.set("useCase", useCaseFilter);
+    if (maxRate !== 200) params.set("maxRate", String(maxRate));
+    if (searchQuery.trim()) params.set("q", searchQuery.trim());
+    if (selectedVenueId !== venues[0].id) params.set("venue", selectedVenueId);
+
+    const queryString = params.toString();
+    const nextUrl = queryString ? `${window.location.pathname}?${queryString}` : window.location.pathname;
+    window.history.replaceState(null, "", nextUrl);
+  }, [maxRate, searchQuery, selectedVenueId, useCaseFilter]);
+
+  useEffect(() => {
+    localStorage.setItem("venuespace-favorites", JSON.stringify(favoriteVenueIds));
+  }, [favoriteVenueIds]);
+
+  useEffect(() => {
+    if (!toast) return;
+    const timer = window.setTimeout(() => setToast(null), 3200);
+    return () => window.clearTimeout(timer);
+  }, [toast]);
 
   const filteredVenues = useMemo(
     () =>
@@ -182,9 +260,24 @@ export default function VenueSpacePage() {
         const matchesUseCase =
           useCaseFilter === "All" || venue.allowed_use_cases.includes(useCaseFilter);
         const matchesRate = venue.hourly_rate <= maxRate;
-        return matchesUseCase && matchesRate;
+        const normalizedQuery = searchQuery.trim().toLowerCase();
+        const matchesQuery =
+          !normalizedQuery ||
+          [
+            venue.name,
+            venue.neighborhood,
+            venue.category,
+            venue.vibe,
+            venue.bestFor,
+            ...venue.amenities,
+            ...venue.allowed_use_cases,
+          ]
+            .join(" ")
+            .toLowerCase()
+            .includes(normalizedQuery);
+        return matchesUseCase && matchesRate && matchesQuery;
       }),
-    [maxRate, useCaseFilter]
+    [maxRate, searchQuery, useCaseFilter]
   );
 
   const selectedVenue =
@@ -265,6 +358,26 @@ export default function VenueSpacePage() {
     selectVenue(topMatch.venue.id);
     setUseCaseFilter(intentSearch.useCase);
     setReviewFilter("All");
+    setToast({ tone: "success", message: `${topMatch.venue.name} selected as your top AI match.` });
+  }
+
+  function toggleFavorite(venueId: string) {
+    const venue = venues.find((item) => item.id === venueId);
+    setFavoriteVenueIds((current) => {
+      const isSaved = current.includes(venueId);
+      const next = isSaved ? current.filter((id) => id !== venueId) : [...current, venueId];
+      setToast({
+        tone: isSaved ? "info" : "success",
+        message: `${venue?.name ?? "Venue"} ${isSaved ? "removed from" : "saved to"} your shortlist.`,
+      });
+      return next;
+    });
+  }
+
+  function applyQuickSlot(startTime: string, endTime: string) {
+    setBookingRequest((current) => ({ ...current, startTime, endTime }));
+    setBookingNotice(null);
+    setToast({ tone: "info", message: `Applied ${formatTimeLabel(startTime)} - ${formatTimeLabel(endTime)}.` });
   }
 
   function submitBookingRequest(event: FormEvent<HTMLFormElement>) {
@@ -273,6 +386,7 @@ export default function VenueSpacePage() {
     const result = validateBookingRequest(selectedVenue, bookingRequest);
     if (!result.valid) {
       setBookingNotice(result.message);
+      setToast({ tone: "error", message: result.message });
       return;
     }
 
@@ -300,13 +414,19 @@ export default function VenueSpacePage() {
       },
       ...current,
     ]);
-    setBookingNotice("Request sent. The host can approve to capture funds or decline to release the hold.");
+    const successMessage = "Request sent. The host can approve to capture funds or decline to release the hold.";
+    setBookingNotice(successMessage);
+    setToast({ tone: "success", message: successMessage });
   }
 
   function updateBookingStatus(bookingId: string, status: BookingStatus) {
     setBookings((current) =>
       current.map((booking) => (booking.id === bookingId ? { ...booking, status } : booking))
     );
+    setToast({
+      tone: status === "approved" ? "success" : "info",
+      message: `Booking ${status === "approved" ? "approved and captured" : "declined and hold released"}.`,
+    });
   }
 
   function submitMessage(event: FormEvent<HTMLFormElement>) {
@@ -324,10 +444,28 @@ export default function VenueSpacePage() {
       },
     ]);
     setMessageDraft("");
+    setToast({ tone: "success", message: "Message sent to the booking thread." });
   }
 
   return (
     <main className="venuespace-shell min-h-screen text-foreground">
+      {toast && (
+        <motion.div
+          initial={{ opacity: 0, y: -16, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -16, scale: 0.98 }}
+          className={cn(
+            "fixed right-4 top-4 z-50 max-w-sm rounded-2xl border px-4 py-3 text-sm shadow-2xl backdrop-blur-xl",
+            toast.tone === "success" && "border-emerald-400/25 bg-emerald-500/15 text-emerald-100",
+            toast.tone === "error" && "border-rose-400/25 bg-rose-500/15 text-rose-100",
+            toast.tone === "info" && "border-sky-400/25 bg-sky-500/15 text-sky-100"
+          )}
+          role="status"
+          aria-live="polite"
+        >
+          {toast.message}
+        </motion.div>
+      )}
       <section className="relative overflow-hidden border-b border-white/10">
         <div
           className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(251,191,36,0.18),transparent_28%),radial-gradient(circle_at_80%_10%,rgba(14,165,233,0.24),transparent_30%),linear-gradient(180deg,rgba(255,255,255,0.04),transparent_55%)]"
@@ -607,10 +745,24 @@ export default function VenueSpacePage() {
               <h2 className="font-serif text-3xl md:text-5xl">San Jose spaces ready for off-peak use.</h2>
             </div>
             <div className="premium-surface rounded-2xl border border-white/10 p-4">
-              <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-foreground">
-                <Filter className="h-4 w-4 text-accent" />
-                Use-case filters
+              <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                  <Filter className="h-4 w-4 text-accent" />
+                  Use-case filters
+                </div>
+                <span className="rounded-full border border-white/10 bg-background/70 px-3 py-1 text-xs text-foreground-muted">
+                  {favoriteVenueIds.length} saved
+                </span>
               </div>
+              <label className="mb-4 block">
+                <span className="sr-only">Search venues, neighborhoods, amenities, or vibes</span>
+                <input
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  placeholder="Search cafes, studios, AV, cozy..."
+                  className="input-shell"
+                />
+              </label>
               <div className="flex flex-wrap gap-2">
                 {(["All", ...venueUseCases] as Array<VenueUseCase | "All">).map((useCase) => (
                   <button
@@ -647,6 +799,29 @@ export default function VenueSpacePage() {
             </div>
           </div>
 
+          {filteredVenues.length === 0 && (
+            <div className="premium-surface rounded-3xl border border-white/10 p-8 text-center">
+              <p className="font-display text-xl font-semibold text-foreground">No spaces match those filters yet.</p>
+              <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-foreground-muted">
+                Try widening the hourly rate, clearing search, or choosing another use case. The marketplace keeps
+                the current filters in the URL so the search can be shared.
+              </p>
+              <Button
+                type="button"
+                variant="magnetic"
+                className="mt-5"
+                onClick={() => {
+                  setUseCaseFilter("All");
+                  setMaxRate(225);
+                  setSearchQuery("");
+                }}
+              >
+                Reset discovery
+              </Button>
+            </div>
+          )}
+
+          {filteredVenues.length > 0 && (
           <motion.div
             variants={stagger}
             initial="hidden"
@@ -655,10 +830,17 @@ export default function VenueSpacePage() {
             className="grid gap-4 lg:grid-cols-3"
           >
             {filteredVenues.map((venue) => (
-              <motion.button
+              <motion.article
                 key={venue.id}
-                type="button"
+                role="button"
+                tabIndex={0}
                 onClick={() => selectVenue(venue.id)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    selectVenue(venue.id);
+                  }
+                }}
                 variants={fadeUp}
                 whileHover={{ y: -8, scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
@@ -671,6 +853,20 @@ export default function VenueSpacePage() {
               >
                 <div className={cn("relative h-40 bg-gradient-to-br", venue.imageTone)}>
                   <div className="venue-image-sheen" aria-hidden="true" />
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      toggleFavorite(venue.id);
+                    }}
+                    aria-label={`${favoriteVenueIds.includes(venue.id) ? "Remove" : "Save"} ${venue.name}`}
+                    className={cn(
+                      "absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-background/55 text-foreground backdrop-blur-md transition-colors hover:text-accent",
+                      favoriteVenueIds.includes(venue.id) && "text-rose-300"
+                    )}
+                  >
+                    <Heart className={cn("h-4 w-4", favoriteVenueIds.includes(venue.id) && "fill-current")} />
+                  </button>
                   <div className="absolute bottom-4 left-4 rounded-full border border-white/15 bg-background/55 px-3 py-1 text-xs font-semibold text-foreground backdrop-blur-md">
                     {venue.vibe}
                   </div>
@@ -706,9 +902,10 @@ export default function VenueSpacePage() {
                     ))}
                   </div>
                 </div>
-              </motion.button>
+              </motion.article>
             ))}
           </motion.div>
+          )}
         </div>
       </section>
 
@@ -787,6 +984,21 @@ export default function VenueSpacePage() {
                     </p>
                     <p className="text-xs text-foreground-subtle">Capture on approval</p>
                   </div>
+                </div>
+
+                <div className="mt-6 flex flex-col gap-3 rounded-2xl border border-white/10 bg-background-muted/45 p-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p className="font-display text-sm font-semibold text-foreground">Renter shortlist</p>
+                    <p className="mt-1 text-sm text-foreground-muted">
+                      {favoriteVenueIds.includes(selectedVenue.id)
+                        ? "This space is saved for comparison."
+                        : "Save this space to compare before requesting."}
+                    </p>
+                  </div>
+                  <Button type="button" variant="magnetic" onClick={() => toggleFavorite(selectedVenue.id)}>
+                    <Heart className={cn("h-4 w-4", favoriteVenueIds.includes(selectedVenue.id) && "fill-current")} />
+                    {favoriteVenueIds.includes(selectedVenue.id) ? "Saved" : "Save venue"}
+                  </Button>
                 </div>
 
                 <div className="mt-6 grid gap-3 md:grid-cols-2">
@@ -948,6 +1160,31 @@ export default function VenueSpacePage() {
                       className="mt-2 w-full rounded-xl border border-border bg-background-muted px-3 py-2.5 text-sm outline-none focus:border-accent"
                     />
                   </label>
+                  <div>
+                    <div className="mb-2 flex items-center justify-between gap-3">
+                      <span className="text-sm font-medium text-foreground">Availability snapshot</span>
+                      <span className="text-xs text-foreground-subtle">Shareable V1 calendar</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-5 lg:grid-cols-2">
+                      {availabilityDays.map((day) => (
+                        <button
+                          key={day.date}
+                          type="button"
+                          onClick={() => updateBookingRequest("date", day.date)}
+                          aria-pressed={bookingRequest.date === day.date}
+                          className={cn(
+                            "rounded-2xl border px-3 py-2 text-left transition-all",
+                            bookingRequest.date === day.date
+                              ? "border-accent bg-accent text-background shadow-[0_0_24px_rgba(14,165,233,0.22)]"
+                              : "border-white/10 bg-background-muted/60 text-foreground-muted hover:border-accent/50 hover:text-accent"
+                          )}
+                        >
+                          <span className="block text-xs font-semibold uppercase tracking-wider">{day.label}</span>
+                          <span className="mt-1 block text-[11px]">{day.note}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                   <div className="grid grid-cols-2 gap-3">
                     <label className="block">
                       <span className="text-sm font-medium text-foreground">Start</span>
@@ -968,6 +1205,23 @@ export default function VenueSpacePage() {
                       />
                     </label>
                   </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {quickTimeSlots.map((slot) => (
+                      <button
+                        key={slot.label}
+                        type="button"
+                        onClick={() => applyQuickSlot(slot.start, slot.end)}
+                        className={cn(
+                          "rounded-xl border px-2 py-2 text-xs font-semibold transition-colors",
+                          bookingRequest.startTime === slot.start && bookingRequest.endTime === slot.end
+                            ? "border-accent bg-accent-muted text-accent"
+                            : "border-white/10 bg-background-muted text-foreground-muted hover:border-accent/50 hover:text-accent"
+                        )}
+                      >
+                        {slot.label}
+                      </button>
+                    ))}
+                  </div>
                   <label className="block">
                     <span className="text-sm font-medium text-foreground">Use case</span>
                     <select
@@ -982,8 +1236,23 @@ export default function VenueSpacePage() {
                       ))}
                     </select>
                   </label>
+                  <label className="block">
+                    <span className="text-sm font-medium text-foreground">Event brief</span>
+                    <textarea
+                      value={eventBrief}
+                      onChange={(event) => setEventBrief(event.target.value)}
+                      rows={4}
+                      className="mt-2 w-full resize-none rounded-xl border border-border bg-background-muted px-3 py-2.5 text-sm leading-6 outline-none focus:border-accent"
+                    />
+                  </label>
 
                   <div className="rounded-2xl border border-border bg-background-muted/50 p-4">
+                    <div className="mb-3 flex items-center justify-between text-xs text-foreground-subtle">
+                      <span>
+                        {validation.valid ? `${validation.hours} hours` : `${selectedVenue.min_hours} hr minimum`}
+                      </span>
+                      <span>{selectedVenue.host.responseTime}</span>
+                    </div>
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-foreground-muted">Subtotal</span>
                       <span>{formatCurrency(quote.subtotal)}</span>
@@ -1208,6 +1477,25 @@ export default function VenueSpacePage() {
             <Badge variant="accent" className="w-fit">
               {bookings.filter((booking) => booking.status === "pending_approval").length} pending
             </Badge>
+          </div>
+
+          <div className="mb-6 grid gap-3 md:grid-cols-4">
+            {[
+              ["Pending", bookings.filter((booking) => booking.status === "pending_approval").length.toString()],
+              ["Approved", bookings.filter((booking) => booking.status === "approved").length.toString()],
+              ["Saved", favoriteVenueIds.length.toString()],
+              [
+                "Pipeline",
+                formatCurrency(bookings.reduce((total, booking) => total + booking.total, 0)),
+              ],
+            ].map(([label, value]) => (
+              <Card key={label} className="premium-surface">
+                <CardContent className="pt-5">
+                  <p className="text-xs uppercase tracking-wider text-foreground-subtle">{label}</p>
+                  <p className="mt-2 font-display text-2xl font-semibold text-foreground">{value}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
 
           <div className="grid gap-6 lg:grid-cols-[1fr_420px]">
