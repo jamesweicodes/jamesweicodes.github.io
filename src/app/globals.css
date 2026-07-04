@@ -347,6 +347,17 @@ body::before {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .venuespace-orb,
+  .skeleton-shimmer::after {
+    animation: none;
+  }
+
+  .premium-surface::after {
+    transition: none;
+  }
+}
+
 @utility section-padding {
   padding-inline: 1.5rem;
   padding-block: 6rem;
