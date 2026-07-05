@@ -1,5 +1,6 @@
 import {
   contactContent,
+  executionPlaybookContent,
   experienceContent,
   mediaContent,
   projectsContent,
@@ -46,6 +47,24 @@ function projectsResponse(): string {
   return ["**Engineering & AI Portfolio**", ...blocks].join("\n\n");
 }
 
+function playbookResponse(): string {
+  const missions = executionPlaybookContent.missions
+    .map((mission) => {
+      const phases = mission.phases.map((phase) => phase.name).join(" -> ");
+      return `• **${mission.label}** — ${mission.headline}. Signal: ${mission.signal}. Loop: ${phases}. Yield: ${mission.outcome}`;
+    })
+    .join("\n");
+
+  return [
+    formatBlock(executionPlaybookContent.title, executionPlaybookContent.description),
+    formatBlock("Mission Profiles", missions),
+    formatBlock(
+      "How to use it",
+      "Open the Execution Playbook section, choose a mission type, and copy the generated briefing for a concise Problem / Execution / Yield summary."
+    ),
+  ].join("\n\n");
+}
+
 function mediaResponse(): string {
   const ventures = mediaContent.ventures
     .map((v) => `• **${v.title}** — ${v.description} (${v.platforms.join(", ")})`)
@@ -89,6 +108,7 @@ function fallbackResponse(): string {
     "**Nexus Context AI**",
     "I can provide structured briefings on:",
     "• Tesla Financial Services program delivery",
+    "• James's Execution Playbook methodology",
     "• AI / automation project portfolio",
     "• Videography & content operations",
     "• Contact and credentials",
@@ -104,6 +124,9 @@ export function generateNexusResponse(query: string): string {
 
   if (/tesla|ar |accounts receivable|compliance|reporting|captive|financial services|program manager/.test(q)) {
     return teslaResponse();
+  }
+  if (/playbook|method|methodology|execution|systemize|operating mode|mission/.test(q)) {
+    return playbookResponse();
   }
   if (/project|ai |automation|python|gemini|n8n|lab|script|real estate|event space|pipeline/.test(q)) {
     return projectsResponse();

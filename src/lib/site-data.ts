@@ -25,6 +25,7 @@ export const heroContent = {
 
 export const navLinks = [
   { label: "Experience", href: "#experience" },
+  { label: "Playbook", href: "#playbook" },
   { label: "Projects", href: "#projects" },
   { label: "Media", href: "#media" },
   { label: "Contact", href: "#contact" },
@@ -135,6 +136,87 @@ export const projectsContent = [
     github: null,
   },
 ] as const;
+
+export const executionPlaybookContent = {
+  eyebrow: "Execution Playbook",
+  title: "Turn ambiguous missions into shippable systems.",
+  description:
+    "Pick a mission profile to see how James converts raw constraints into the operating rhythm, automation layer, and proof points needed to move work from idea to implementation.",
+  missions: [
+    {
+      id: "ops",
+      label: "Enterprise Ops",
+      headline: "Stabilize a messy workflow",
+      context: "Collections, compliance, reporting, and stakeholder alignment at scale.",
+      signal: "Manual handoffs, fragmented data, unclear ownership",
+      stack: ["Process Mapping", "SQL & Dashboards", "Dependency Tracking", "Control Design"],
+      phases: [
+        {
+          name: "Frame",
+          detail: "Map the current-state workflow, failure modes, data sources, and decision owners.",
+        },
+        {
+          name: "Systemize",
+          detail: "Replace repeated manual work with workflow rules, reporting checkpoints, and clear SLAs.",
+        },
+        {
+          name: "Prove",
+          detail: "Track adoption, exception volume, compliance coverage, and measurable operational lift.",
+        },
+      ],
+      outcome: "A durable operating system teams can run without spreadsheet heroics.",
+      metric: "Enterprise-ready",
+    },
+    {
+      id: "ai",
+      label: "AI Build",
+      headline: "Ship an AI-native tool",
+      context: "Automation products that turn domain prompts into useful outputs.",
+      signal: "Repeatable creative or analytical work waiting for a better interface",
+      stack: ["Gemini API", "Prompt Systems", "FastAPI", "Next.js"],
+      phases: [
+        {
+          name: "Capture",
+          detail: "Define the user's job, input schema, success criteria, and guardrails before coding.",
+        },
+        {
+          name: "Compose",
+          detail: "Wire the prompt, validation, model settings, and frontend flow into a tight feedback loop.",
+        },
+        {
+          name: "Harden",
+          detail: "Add fallbacks, safety rules, telemetry cues, and copy-ready output formatting.",
+        },
+      ],
+      outcome: "A focused tool that compresses a repeatable task from minutes into seconds.",
+      metric: "AI-native",
+    },
+    {
+      id: "media",
+      label: "Content Engine",
+      headline: "Build a cinematic publishing loop",
+      context: "Finance, brand, and social content produced with a creator-operator mindset.",
+      signal: "Good ideas need story, cadence, gear discipline, and distribution shape",
+      stack: ["Sony a7 IV", "DJI Osmo", "Script Pipeline", "Short-Form Editing"],
+      phases: [
+        {
+          name: "Package",
+          detail: "Turn the core message into hooks, beats, visual requirements, and platform-specific cuts.",
+        },
+        {
+          name: "Capture",
+          detail: "Shoot with intentional framing, light, movement, and b-roll that supports the business goal.",
+        },
+        {
+          name: "Distribute",
+          detail: "Publish variants, learn from retention signals, and feed winning patterns back into scripts.",
+        },
+      ],
+      outcome: "A repeatable media system where every asset has a clear strategic job.",
+      metric: "Cinematic",
+    },
+  ],
+} as const;
 
 export const mediaContent = {
   ventures: [
