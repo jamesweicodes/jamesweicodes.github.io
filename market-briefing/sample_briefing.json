@@ -1,0 +1,323 @@
+{
+  "origin": "sample",
+  "notice": null,
+  "notice_kind": null,
+  "generated_at": "2026-11-16T06:15:47.494112+00:00",
+  "generated_label": "Nov 16, 2026, 1:15 AM ET",
+  "session_date": "2026-11-13",
+  "session_label": "Friday, November 13, 2026",
+  "disclaimer": "Not financial advice. This page is research context: what moved, why it can matter for stocks, rates, and risk, and which themes a long-term investor might understand. It is not a recommendation to buy, sell, or hold any security, not a forecast, and not tailored to anyone's finances.",
+  "moves": [
+    {
+      "id": "spx",
+      "label": "S&P 500",
+      "group": "equity",
+      "primary": true,
+      "price_label": "7,561.67",
+      "session_label": "-0.4% last session",
+      "week_label": "+2.5% over 5 sessions",
+      "direction": "down",
+      "session_pct": -0.4047466000738943,
+      "week_pct": 2.505267309111467,
+      "session_bps": -3072.998046875,
+      "week_bps": 18481.005859375,
+      "price": 7561.669921875,
+      "session_date": "2026-11-13",
+      "sessions": 5
+    },
+    {
+      "id": "dji",
+      "label": "Dow",
+      "group": "equity",
+      "primary": true,
+      "price_label": "52,347.55",
+      "session_label": "+0.1% last session",
+      "week_label": "+2.1% over 5 sessions",
+      "direction": "up",
+      "session_pct": 0.0964889970947983,
+      "week_pct": 2.070401070229467,
+      "session_bps": 5046.09375,
+      "week_bps": 106182.03125,
+      "price": 52347.55078125,
+      "session_date": "2026-11-13",
+      "sessions": 5
+    },
+    {
+      "id": "ixic",
+      "label": "Nasdaq",
+      "group": "equity",
+      "primary": true,
+      "price_label": "25,136.27",
+      "session_label": "-0.9% last session",
+      "week_label": "+2.3% over 5 sessions",
+      "direction": "down",
+      "session_pct": -0.9060139497874792,
+      "week_pct": 2.2654709683243133,
+      "session_bps": -22982.03125,
+      "week_bps": 55683.984375,
+      "price": 25136.26953125,
+      "session_date": "2026-11-13",
+      "sessions": 5
+    },
+    {
+      "id": "rut",
+      "label": "Russell 2000",
+      "group": "equity",
+      "primary": false,
+      "price_label": "2,790.49",
+      "session_label": "-0.3% last session",
+      "week_label": "+1.3% over 5 sessions",
+      "direction": "down",
+      "session_pct": -0.3061766514463648,
+      "week_pct": 1.3209305871418207,
+      "session_bps": -857.0068359375,
+      "week_bps": 3637.98828125,
+      "price": 2790.489990234375,
+      "session_date": "2026-11-13",
+      "sessions": 5
+    },
+    {
+      "id": "tnx",
+      "label": "U.S. 10-year yield",
+      "group": "rate",
+      "primary": true,
+      "price_label": "5.15%",
+      "session_label": "+5 bp last session",
+      "week_label": "+29 bp over 5 sessions",
+      "direction": "up",
+      "session_pct": 0.999405051520931,
+      "week_pct": 6.071199566793608,
+      "session_bps": 5.099964141845703,
+      "week_bps": 29.49995994567871,
+      "price": 5.1539998054504395,
+      "session_date": "2026-11-13",
+      "sessions": 5
+    },
+    {
+      "id": "fvx",
+      "label": "U.S. 5-year yield",
+      "group": "rate",
+      "primary": false,
+      "price_label": "4.98%",
+      "session_label": "+4 bp last session",
+      "week_label": "+33 bp over 5 sessions",
+      "direction": "up",
+      "session_pct": 0.7280035122984929,
+      "week_pct": 7.164376076807718,
+      "session_bps": 3.599977493286133,
+      "week_bps": 33.300018310546875,
+      "price": 4.980999946594238,
+      "session_date": "2026-11-13",
+      "sessions": 5
+    },
+    {
+      "id": "tyx",
+      "label": "U.S. 30-year yield",
+      "group": "rate",
+      "primary": false,
+      "price_label": "5.48%",
+      "session_label": "+5 bp last session",
+      "week_label": "+22 bp over 5 sessions",
+      "direction": "up",
+      "session_pct": 0.8834871724838371,
+      "week_pct": 4.2015153630398645,
+      "session_bps": 4.799985885620117,
+      "week_bps": 22.099971771240234,
+      "price": 5.480999946594238,
+      "session_date": "2026-11-13",
+      "sessions": 5
+    },
+    {
+      "id": "irx",
+      "label": "13-week T-bill yield",
+      "group": "rate",
+      "primary": false,
+      "price_label": "4.12%",
+      "session_label": "-1 bp last session",
+      "week_label": "+12 bp over 5 sessions",
+      "direction": "down",
+      "session_pct": -0.14533831009040848,
+      "week_pct": 3.0500054359436035,
+      "session_bps": -0.5999565124511719,
+      "week_bps": 12.200021743774414,
+      "price": 4.122000217437744,
+      "session_date": "2026-11-13",
+      "sessions": 5
+    },
+    {
+      "id": "vix",
+      "label": "VIX",
+      "group": "risk",
+      "primary": true,
+      "price_label": "19.30",
+      "session_label": "+3.2% last session",
+      "week_label": "-24.7% over 5 sessions",
+      "direction": "up",
+      "session_pct": 3.2085478590471457,
+      "week_pct": -24.72699026329743,
+      "session_bps": 59.999847412109375,
+      "week_bps": -634.0000152587891,
+      "price": 19.299999237060547,
+      "session_date": "2026-11-13",
+      "sessions": 5
+    },
+    {
+      "id": "oil",
+      "label": "WTI crude",
+      "group": "commodity",
+      "primary": false,
+      "price_label": "$88.56",
+      "session_label": "-0.2% last session",
+      "week_label": "-2.5% over 5 sessions",
+      "direction": "down",
+      "session_pct": -0.20284010537402905,
+      "week_pct": -2.4991789350430524,
+      "session_bps": -18.000030517578125,
+      "week_bps": -227.00042724609375,
+      "price": 88.55999755859375,
+      "session_date": "2026-11-13",
+      "sessions": 5
+    },
+    {
+      "id": "gold",
+      "label": "Gold",
+      "group": "commodity",
+      "primary": false,
+      "price_label": "$3,886.30",
+      "session_label": "0.0% last session",
+      "week_label": "-4.6% over 5 sessions",
+      "direction": "flat",
+      "session_pct": 0.02573803792326458,
+      "week_pct": -4.628330953777502,
+      "session_bps": 100.0,
+      "week_bps": -18859.9853515625,
+      "price": 3886.300048828125,
+      "session_date": "2026-11-13",
+      "sessions": 5
+    },
+    {
+      "id": "dxy",
+      "label": "U.S. dollar index",
+      "group": "fx",
+      "primary": false,
+      "price_label": "103.41",
+      "session_label": "+0.2% last session",
+      "week_label": "+1.1% over 5 sessions",
+      "direction": "up",
+      "session_pct": 0.23263109181318697,
+      "week_pct": 1.0850445525304306,
+      "session_bps": 24.00054931640625,
+      "week_bps": 111.00006103515625,
+      "price": 103.41000366210938,
+      "session_date": "2026-11-13",
+      "sessions": 5
+    }
+  ],
+  "headlines": [
+    {
+      "title": "Stock futures slip as traders brace for Nvidia earnings, Anthropic IPO this week: Live updates",
+      "link": "https://www.cnbc.com/2026/11/15/stock-market-today-live-updates.html",
+      "source": "CNBC",
+      "published_label": "Nov 16, 2026, 12:24 AM ET",
+      "summary": "The Dow, S&P 500 and Nasdaq posted their biggest weekly gains since August, rising more than 2% each."
+    },
+    {
+      "title": "China confirms Xi-Trump-Putin historic summit. What will be on the agenda?",
+      "link": "https://www.cnbc.com/2026/11/16/trump-xi-putin-ukraine-nuclear-tariffs-russia-iran-.html",
+      "source": "CNBC",
+      "published_label": "Nov 15, 2026, 11:34 PM ET",
+      "summary": "The talks are expected to focus on issues including nuclear non-proliferation, the Middle East war, trade policies and, possibly, the Ukraine war."
+    },
+    {
+      "title": "China\u2019s slowdown deepens in October as industrial output, retail sales, investment miss estimates",
+      "link": "https://www.cnbc.com/2026/11/16/china-retail-sales-october-industrial-output-investment.html",
+      "source": "CNBC",
+      "published_label": "Nov 15, 2026, 10:53 PM ET",
+      "summary": "A deepening reliance on external demand leaves China more exposed to shocks abroad as domestic momentum fades, analysts say."
+    },
+    {
+      "title": "Tech world's calls for Jensen Huang to return to Nvidia are growing",
+      "link": "https://www.cnbc.com/2026/11/16/nvidia-jensen-huang-return-tech.html",
+      "source": "CNBC",
+      "published_label": "Nov 15, 2026, 10:35 PM ET",
+      "summary": "Calls for Jensen Huang's return as Nvidia CEO are growing, with tech executives and major shareholders backing a potential comeback following his resignation."
+    },
+    {
+      "title": "Japan's economy unexpectedly contracts in third-quarter as elevated energy costs bite",
+      "link": "https://www.cnbc.com/2026/11/16/japan-q3-gdp-energy-oil-prices.html",
+      "source": "CNBC",
+      "published_label": "Nov 15, 2026, 9:56 PM ET",
+      "summary": "Energy subsidies for households had reportedly expired in September, exposing the economy to the higher energy prices brought about by the Iran war."
+    },
+    {
+      "title": "Lutnick faces questions over Nvidia spy scandal. His sons' firm has ties to the chipmaker",
+      "link": "https://www.cnbc.com/2026/11/13/howard-lutnick-nvidia-jensen-huang-china-cantor-fitzgerald.html",
+      "source": "CNBC",
+      "published_label": "Nov 15, 2026, 2:58 PM ET",
+      "summary": "Jensen Huang\u2019s resignation as Nvidia CEO has brought renewed scrutiny to Commerce Secretary Howard Lutnick and his family's financial ties to the chipmaker."
+    },
+    {
+      "title": "Anti-Houthi forces retreat in Yemen as Iran strikes Bahrain in attack on U.S. base",
+      "link": "https://www.cnbc.com/2026/11/15/bahrain-iran-drone-attacks-tehran-us-base.html",
+      "source": "CNBC",
+      "published_label": "Nov 15, 2026, 2:11 PM ET",
+      "summary": "Iranian attacks on Bahrain, headquarters of the U.S. Fifth Fleet in the Gulf, were likely to put new pressure on U.S. President Donald Trump to resolve the war."
+    },
+    {
+      "title": "Fed 'has some work to do on inflation,' Kansas City Fed chief says",
+      "link": "https://www.cnbc.com/2026/11/15/fed-has-some-work-to-do-on-inflation-kansas-city-fed-chief-says.html",
+      "source": "CNBC",
+      "published_label": "Nov 15, 2026, 2:04 PM ET",
+      "summary": "Schmid did not call for additional rate hikes, but said inflation is \"uncomfortably above the 2% price stability target, and moving in the wrong direction.\""
+    }
+  ],
+  "impact": {
+    "stocks": "The S&P 500 fell 0.4% in the last cash session, to 7,561.67. The Dow rose 0.1%, the Nasdaq fell 0.9%, and the Russell 2000 fell 0.3%. Over the 5 sessions in this window, the S&P 500 rose 2.5%. The Nasdaq lagged the S&P 500, so the technology-heavy end of the market was weaker than the broad list. For a long-term investor, one session changes the price of a diversified holding today. It does not, by itself, change the earnings that holding can collect over many years.",
+    "rates": "The U.S. 10-year yield finished at 5.15%. It rose 5 basis points on the session and 29 basis points over 5 sessions. Alongside it: the 5-year at 4.98%, the 30-year at 5.48%, and the 13-week bill at 4.12%. The 10-year yield sits about 103 basis points above the 13-week bill, so longer-term money costs more than very short-term money. Higher yields raise the return available on plain government bonds and the hurdle stock valuations are measured against. Borrowing costs that follow Treasury yields face upward pressure. Companies whose profits are expected further in the future are usually more sensitive to that hurdle than businesses that earn their cash sooner.",
+    "risk": "The VIX, a gauge of expected S&P 500 volatility, is 19.30, and it rose 3.2% on the session. Over 5 sessions it fell 24.7%. That is a moderate reading, neither unusually calm nor a stress spike. WTI crude fell 0.2% to $88.56, gold was little changed at $3,886.30, and the U.S. dollar index rose 0.2% to 103.41. The newest headlines cluster around artificial intelligence, monetary policy, inflation, energy prices, geopolitics and trade, and earnings and new listings. Taken together, index moves, the Treasury yield, and volatility describe the backdrop. They are context for risk, not a signal to trade."
+  },
+  "watch": [
+    {
+      "name": "S&P 500",
+      "reason": "Broad U.S. equities fell 0.4% last session and rose 2.5% over 5 sessions, which is the baseline a diversified stock holding is being compared with."
+    },
+    {
+      "name": "Large-cap technology",
+      "reason": "Headlines are on AI companies, which is a reason to notice how much of the Nasdaq sits in a few large businesses. The Nasdaq fell 0.9% last session."
+    },
+    {
+      "name": "U.S. 10-year Treasury",
+      "reason": "The yield finished at 5.15% and rose 29 basis points over 5 sessions. That is the plain hurdle rate stock prices are measured against."
+    },
+    {
+      "name": "Equity volatility (VIX)",
+      "reason": "At 19.30, expected S&P 500 volatility is a moderate reading, neither unusually calm nor a stress spike. That describes the swings being priced, which is context for time horizon."
+    },
+    {
+      "name": "Gold",
+      "reason": "Gold fell 4.6% over 5 sessions, to $3,886.30. Gold often moves when real yields or the demand for a non-cash store of value shifts."
+    }
+  ],
+  "sources": [
+    {
+      "name": "Yahoo Finance chart endpoint",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?interval=1d&range=5d",
+      "note": "Unattended daily closes for indexes, Treasury yields, VIX, oil, gold, and the dollar. No API key."
+    },
+    {
+      "name": "CNBC top news RSS",
+      "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114",
+      "note": "Public headlines."
+    },
+    {
+      "name": "CNBC economy RSS",
+      "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258",
+      "note": "Public economy headlines."
+    },
+    {
+      "name": "Federal Reserve press RSS",
+      "url": "https://www.federalreserve.gov/feeds/press_all.xml",
+      "note": "Included only when a recent release title is about policy or financial conditions."
+    }
+  ]
+}
